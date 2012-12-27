@@ -16,7 +16,7 @@ class Entity {
     private var world //: World;
     private var entityManager //: EntityManager;
 
-    private var uuid : int; //implement this 
+    private var uuid : int; //TODO: implement this 
 
     public function new( World, id ) {
         this.world = world;
@@ -27,11 +27,63 @@ class Entity {
         return id;
     }
 
-    public function getComponentBits() : Int {
+    private function getComponentBits() : Int {
         return componentBits;
     }
 
-    public function getSystemBits() : Int {
+    private function getSystemBits() : Int {
         return systemBits;
+    }
+
+    private function reset() {
+        systemBits = 0;
+        componentBits = 0;
+        //uuid = new uuid!
+    }
+
+    public function addComponent( component ) : Entity {
+        //TODO
+        return this;
+    }
+
+    public function removeComponent( component ) : Entity {
+        //TODO
+        return this;
+    }
+
+    public function isActive() : Bool {
+        //TODO
+    }
+
+    public function isEnabled() : Bool {
+        //TODO
+    }
+
+    public function getComponent() {
+        //TODO
+    }
+
+    public function getComponents() {
+        //TODO
+    }
+
+    public function addToWorld() {
+        //TODO
+    }
+
+    public function changedInWorld() {
+        //TODO
+    }
+
+    public function deleteFromWorld() {
+        //TODO
+    }
+
+    public function getUuid() {
+        return uuid;
+    }
+
+    public function getWorld() {
+        //TODO
     }
 }

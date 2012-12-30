@@ -34,18 +34,20 @@
  * http://en.wikipedia.org/wiki/UUID#Version_4_.28random.29
  */
 
-private inline static var M31 = 2147483647.0; //Mersenne Prime with exponent 31
-private inline static var MINSTD = 16807.0;   //primitive root modulo M31
+class UUID {
+	private inline static var M31 = 2147483647.0; //Mersenne Prime with exponent 31
+	private inline static var MINSTD = 16807.0;   //primitive root modulo M31
 
-// returns the next random int (using the Parker-Millar-Carta algorithm) given a seed.
-private static inline function next( seed : Int ) : Int {
-	return (( seed * MINSTD ) % M31 ).int();
-}
+	// returns the next random int (using the Parker-Millar-Carta algorithm) given a seed.
+	private static inline function next( seed : Int ) : Int {
+		return (( seed * MINSTD ) % M31 ).int();
+	}
 
-public static function getUuid( ?seed : Int ) {
+	public static function getUuid( ?seed : Int ) {
 		if (seed.isNull()) {
 			seed = Math.floor( Math.random() * M31 );
 		}
+
 		var chars = CHARS, uuid = new Array(), rnd=0, r;
 		for (i in 0...36) {
 			if (i==8 || i==13 ||  i==18 || i==23) {
@@ -63,3 +65,4 @@ public static function getUuid( ?seed : Int ) {
 		}
 		return uuid.join("");
 	}
+}

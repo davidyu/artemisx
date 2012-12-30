@@ -13,10 +13,10 @@ class Entity {
     private var componentBits : Int;
     private var systemBits : Int;
 
-    private var world //: World;
-    private var entityManager //: EntityManager;
+    private var world; //: World;
+    private var entityManager; //: EntityManager;
 
-    private var uuid : int; //implement this 
+    private var uuid : Int; //implement this 
 
     public function new( World, id ) {
         this.world = world;

@@ -13,10 +13,12 @@ class Entity {
     private var componentBits : Int;
     private var systemBits : Int;
 
+    //Future: maybe we need more than 32 components in some given game. In such cases we should write a data structure for an unconstrained bitset.
+
     private var world; //: World;
     private var entityManager; //: EntityManager;
 
-    private var uuid : Int; //implement this 
+    private var uuid : Int; //implement this
 
     public function new( World, id ) {
         this.world = world;

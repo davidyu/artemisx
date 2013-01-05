@@ -27,8 +27,15 @@ class TestUUID extends haxe.unit.TestCase {
             //neko.Lib.print(u[i] + "\n");
         }
 
-        var allUnique : Bool = 
-            Lambda.foreach(u, function( uuid ) { return Lambda.exists( u, function( v ) { return v == uuid; } ); } );
+        var allUnique : Bool = true;
+
+        for ( i in 0 ... num ) {
+            for ( j in i+1 ... num ) {
+                if ( u[i] == u[j] ) {
+                    allUnique = false;
+                }
+            }
+        }
 
         assertTrue( allUnique );
     }

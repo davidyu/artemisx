@@ -20,7 +20,7 @@ class Entity {
     private var world; //: World;
     private var entityManager; //: EntityManager;
 
-    private var uuid : Int; //implement this
+    private var uuid : String;
 
     public function new( World, id ) {
         this.world = world;
@@ -42,7 +42,7 @@ class Entity {
     private function reset() {
         systemBits = 0;
         componentBits = 0;
-        //uuid = new uuid!
+        uuid = UUID.getUuid();
     }
 
     public function addComponent( component ) : Entity {

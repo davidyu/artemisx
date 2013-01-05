@@ -9,3 +9,14 @@ package com.artemis;
  */
 
 
+class EntityManager extends Manager {
+    private var entities; //TODO implement Bags
+    private var disabled; //TODO implement BitSet
+
+    private var active : Int;
+    private var added : Int64;
+    private var created : Int64;
+    private var deleted : Int64;
+
+    private var identifierPool; //TODO implement IdentifierPool
+}

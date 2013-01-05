@@ -1,6 +1,5 @@
 package com.artemis;
 
-
 /**
  *
  * The Manager class.

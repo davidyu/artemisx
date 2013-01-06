@@ -19,16 +19,14 @@ class Main
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		// entry point
-		var bit = new Bitset(32);
+		var bit = new Bitset(1);
 		bit.set(0);
 		bit.set(2);
-		bit.set(30);
+		bit.set(3);
 		trace(bit.get(0));
 		trace(bit.get(1));
-		trace(bit.get(2));
-		trace(bit.get(30));
-		trace(bit.get(31));
-		bit.trace();
+		trace(bit.get(32));
+		bit.toString();
 	}
 	
 }

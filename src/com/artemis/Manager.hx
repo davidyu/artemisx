@@ -22,19 +22,19 @@ class Manager implements EntityObserver {
         return world;
     }
 
-    override public function added(Entity e) {
+    public function added(Entity e) {
     }
 
-    override public function changed(Entity e) {
+    public function changed(Entity e) {
     }
 
-    override public function deleted(Entity e) {
+    public function deleted(Entity e) {
     }
 
-    override public function disabled(Entity e) {
+    public function disabled(Entity e) {
     }
 
-    override public function enabled(Entity e) {
+    public function enabled(Entity e) {
     }
 }
 

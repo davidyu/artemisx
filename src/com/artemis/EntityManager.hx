@@ -1,4 +1,5 @@
 package com.artemis;
+import haxe.FastList;
 
 /**
  *
@@ -10,7 +11,9 @@ package com.artemis;
 
 
 class EntityManager extends Manager {
-    private var entities; //TODO implement Bags
+    //TODO implement Bags 
+	// Might not need because TArray will suffice; no raw array in Haxe anyway
+	private var entities; 
     private var disabled; //TODO implement BitSet
 
     private var active : Int;
@@ -18,5 +21,27 @@ class EntityManager extends Manager {
     private var created : Int64;
     private var deleted : Int64;
 
-    private var identifierPool; //TODO implement IdentifierPool
+    private var identifierPool:IdentifierPool; 
+}
+
+private class IdentifierPool
+{
+    private var ids:FastList<Int>;
+    private var nextAvailableId:Int;
+
+    public function new() {
+        ids = new FastList<Int>();
+        nextAvailableId = 0;
+    }
+    
+    public function checkout() {
+        if (!ids.isEmpty()) {
+            return ids.pop();
+        }
+        return nextAvailableId++;
+    }
+    
+    public function checkin(id:Int) {
+        ids.add(id);
+    }
 }

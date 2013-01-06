@@ -58,13 +58,15 @@ class Entity {
     }
 
     public function isActive() : Bool {
-        //TODO
 		return true;
     }
 
     public function isEnabled() : Bool {
-        //TODO
-		return true;
+        return entityManager.isActive( id );
+    }
+
+    public function isEnabled() : Bool {
+        return entityManager.isEnabled( id );
     }
 
     public function getComponent() {

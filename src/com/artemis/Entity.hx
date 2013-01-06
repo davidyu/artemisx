@@ -18,7 +18,7 @@ class Entity {
      */
 
     private var world; //: World;
-    private var entityManager; //: EntityManager;
+    private var entityManager : EntityManager;
 
     private var uuid : String;
 

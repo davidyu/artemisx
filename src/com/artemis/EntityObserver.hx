@@ -10,15 +10,15 @@ package com.artemis;
 
 interface EntityObserver {
 
-    function added(Entity e);
+    function onAdded(e:Entity):Void;
 
-    function changed(Entity e);
+    function onChanged(e:Entity):Void;
 
-    function deleted(Entity e);
+    function onDeleted(e:Entity):Void;
 
-    function enabled(Entity e);
+    function onEnabled(e:Entity):Void;
 
-    function disabled(Entity e);
-
+    function onDisabled(e:Entity):Void;
+	
 }
 

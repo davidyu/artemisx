@@ -34,6 +34,8 @@
  * http://en.wikipedia.org/wiki/UUID#Version_4_.28random.29
  */
 
+package com.utils;
+
 class UUID {
     private inline static var M31 = 2147483647.0; //Mersenne Prime with exponent 31
     private inline static var MINSTD = 16807.0;   //primitive root modulo M31

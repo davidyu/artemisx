@@ -10,11 +10,13 @@ package com.artemis;
 
 class Manager implements EntityObserver {
     
-    private var world;
+    private var world:World;
 
-    private function initialize(); //I expect this to be overriden
+    private function initialize():Void {
+		
+	}
 
-    private function setWorld(World world) {
+    private function setWorld(world:World) {
         this.world = world;
     }
 
@@ -22,19 +24,19 @@ class Manager implements EntityObserver {
         return world;
     }
 
-    public function added(Entity e) {
+    public function onAdded(e:Entity) {
     }
 
-    public function changed(Entity e) {
+    public function onChanged(e:Entity) {
     }
 
-    public function deleted(Entity e) {
+    public function onDeleted(e:Entity) {
     }
 
-    public function disabled(Entity e) {
+    public function onDisabled(e:Entity) {
     }
 
-    public function enabled(Entity e) {
+    public function onEnabled(e:Entity) {
     }
 }
 

@@ -1,5 +1,8 @@
 package com.artemis;
+import com.utils.Bitset;
+import com.utils.TArray;
 import haxe.FastList;
+import haxe.Int64;
 
 /**
  *
@@ -13,13 +16,13 @@ import haxe.FastList;
 class EntityManager extends Manager {
     //TODO implement Bags 
 	// Might not need because TArray will suffice; no raw array in Haxe anyway
-	private var entities; 
-    private var disabled; //TODO implement BitSet
+	private var entities:TArray<Entity>; 
+    private var disabled:Bitset;
 
     private var active : Int;
     private var added : Int64;
-    private var created : Int64;
-    private var deleted : Int64;
+    private var created :Int64;
+    private var deleted :Int64;
 
     private var identifierPool:IdentifierPool; 
 }

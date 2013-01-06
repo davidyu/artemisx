@@ -1,5 +1,7 @@
 package com.artemis;
 
+import com.utils.UUID;
+
 /**
  *
  * The entity class.
@@ -17,12 +19,12 @@ class Entity {
      * In such cases we should write a data structure for an unconstrained bitset.
      */
 
-    private var world; //: World;
-    private var entityManager; //: EntityManager;
+    private var world:World; //: World;
+    private var entityManager:EntityManager; //: EntityManager;
 
     private var uuid : String;
 
-    public function new( World, id ) {
+    public function new(world:World, id) {
         this.world = world;
         this.id = id;
     }
@@ -57,10 +59,12 @@ class Entity {
 
     public function isActive() : Bool {
         //TODO
+		return true;
     }
 
     public function isEnabled() : Bool {
         //TODO
+		return true;
     }
 
     public function getComponent() {

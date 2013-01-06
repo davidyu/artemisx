@@ -36,26 +36,72 @@ class EntityManager extends Manager {
         return e;
     }
 
-    override public function added( Entity e ) {
+    override public function added( e : Entity ) {
         active++;
         added++;
         entities.insert( e.getId(), e );
     }
 
-    override public function enabled( Entity e ) {
+    override public function enabled( e : Entity ) {
         disabled.unset( e.getId() );
     }
 
-    override public function disabled( Entity e ) {
+    override public function disabled( e : Entity ) {
         disabled.set( e.getId() );
     }
 
-    override public function deleted(Entity e) {
+    override public function deleted( e : Entity ) {
         entities.insert( e.getId(), null );
+
         disabled.unset( e.getId() );
+
         identifierPool.checkin( e.getId() );
+
         active--;
         deleted++;
+    }
+
+    //Returns whether the Entity (given entityId) is active.
+    //  Active means the entity is being actively processed.
+    public function isActive( entityId : Int ) : Bool {
+        return entities[ entityId ] != null;
+    }
+
+    //Check if the specified entityId is enabled.
+    //  Enabled means...
+    public function isEnabled( entityId : Int ) : Bool {
+        return !disabled.get( entityId );
+    }
+
+    // Get how many entities are active in this world.
+    public function getActiveEntityCount() : Int {
+        return active;
+    }
+
+    // Get how many entities have been created in the world since start.
+    //  created entities >= added entities, since a created entity is not always added
+    public function getTotalCreated() : Int64 {
+        return created;
+    }
+
+    // Get how many entities have been added to the world since start.
+    public function getTotalAdded() : Int64 {
+        return added;
+    }
+
+    // Get how many entities have been deleted from the world since start.
+    public long getTotalDeleted() {
+        return deleted;
+    }
+
+    private function getEntity( entityId : Int ) : Entity {
+        var e = entities[ entityId ];
+        #if debug
+        if ( e == null ) {
+            throw "Queried entity does not exist."
+        }
+        #end
+        return e;
     }
 
 }

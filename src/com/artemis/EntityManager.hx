@@ -65,7 +65,7 @@ class EntityManager extends Manager {
 
         identifierPool.checkin( e.getId() );
         active--;
-        deleted = Int64.add(deleted, Int64.ofInt(1));
+        deleted = Int64.add( deleted, Int64.ofInt( 1 ) );
     }
 
     //Returns whether the Entity (given entityId) is active.

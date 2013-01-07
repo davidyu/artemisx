@@ -1,5 +1,7 @@
 package com.artemis;
 
+import com.utils.Bitset;
+import com.utils.TArray;
 import haxe.FastList;
 import haxe.Int64;
 
@@ -17,8 +19,8 @@ class EntityManager extends Manager {
 
     private var active : Int;
     private var added : Int64;
-    private var created : Int64;
-    private var deleted : Int64;
+    private var created :Int64;
+    private var deleted :Int64;
 
     private var identifierPool : IdentifierPool;
 

@@ -1,6 +1,6 @@
 package com.artemis;
 
-interface IComponent 
+interface Component 
 {
 	
 }

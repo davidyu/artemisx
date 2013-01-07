@@ -11,14 +11,14 @@ package com.artemis;
 
 interface EntityObserver {
 
-    function added( e : Entity ) : Void;
+    function onAdded( e:Entity ):Void;
 
-    function changed( e : Entity ) : Void;
+    function onChanged( e:Entity ):Void;
 
-    function deleted( e : Entity ) : Void;
+    function onDeleted( e:Entity ):Void;
 
-    function enabled( e : Entity ) : Void;
+    function onEnabled( e:Entity ):Void;
 
-    function disabled( e : Entity ) : Void;
+    function onDisabled( e:Entity ):Void;
 }
 

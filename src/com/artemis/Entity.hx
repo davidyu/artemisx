@@ -1,5 +1,7 @@
 package com.artemis;
 
+import com.utils.UUID;
+
 /**
  *
  * The entity class.
@@ -56,6 +58,10 @@ class Entity {
     }
 
     public function isActive() : Bool {
+		return true;
+    }
+
+    public function isEnabled() : Bool {
         return entityManager.isActive( id );
     }
 

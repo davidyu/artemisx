@@ -1,3 +1,4 @@
 -neko test.n
 -cp ../src/com/artemis/
+-cp ../src/com/utils/
 -main ArtemisTest

@@ -1,2 +1,3 @@
-haxe test/test.hxml
-neko test/test.n
+TESTPATH=src/com/artemis/test
+haxe $TESTPATH/test.hxml
+neko $TESTPATH/test.n

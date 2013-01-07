@@ -1,4 +1,5 @@
 package com.artemis;
+
 import com.utils.Bitset;
 import com.utils.TArray;
 import haxe.FastList;
@@ -12,15 +13,14 @@ import haxe.Int64;
  *
  */
 
-
 class EntityManager extends Manager {
     private var entities : TArray<Entity>;
     private var disabled : Bitset;
 
-    public var active(default, null) : Int64;
-    private var added(default, null) : Int64;
-    private var created(default, null) :Int64;
-    private var deleted(default, null) :Int64;
+    private var active (default, null) : Int;
+    private var added (default, null) : Int64;
+    private var created (default, null) :Int64;
+    private var deleted (default, null) :Int64;
 
     private var identifierPool : IdentifierPool;
 
@@ -28,54 +28,88 @@ class EntityManager extends Manager {
         entities = new TArray<Entity>();
         disabled = new Bitset( 1 );
         identifierPool = new IdentifierPool();
+        initialize();
     }
 
-    override private function initialize() { }
+    override private function initialize() {
+        active = 0;
+        added = Int64.ofInt( 0 );
+        created = Int64.ofInt( 0 );
+        deleted = Int64.ofInt( 0 );
+    }
 
-    private function createEntityInstance() : Entity {
-        var e:Entity = new Entity( world, identifierPool.checkout() );
-        Int64.add(created, Int64.ofInt(1)); // QQ where is operator overloading when you need it
+    public function createEntityInstance() : Entity {
+        var e = new Entity( world, identifierPool.checkout() );
+        created = Int64.add( created, Int64.ofInt( 1 ) );
         return e;
     }
 
-    override public function onAdded(e:Entity) {
-        Int64.add(active, Int64.ofInt(1));
-		Int64.add(added, Int64.ofInt(1));
-        //entities.insert( e.getId(), e );
+    override public function onAdded( e:Entity ) {
+        active++;
+        added = Int64.add( added, Int64.ofInt( 1 ) );
+        entities.insert( e.getId(), e );
     }
 
-    override public function onEnabled(e:Entity) {
+    override public function onEnabled( e : Entity ) {
         disabled.unset( e.getId() );
     }
 
-    override public function onDisabled(e:Entity) {
+    override public function onDisabled( e : Entity ) {
         disabled.set( e.getId() );
     }
 
-    override public function onDeleted(e:Entity) {
-        //entities.insert( e.getId(), null );
-        disabled.unset( e.getId() );
-        identifierPool.checkin( e.getId() );
-		Int64.add(active, Int64.ofInt(-1));
-		Int64.add(deleted, Int64.ofInt(1));
+    override public function onDeleted( e : Entity ) {
+        entities.insert( e.getId(), null );
 
+        disabled.unset( e.getId() );
+
+        identifierPool.checkin( e.getId() );
+        active--;
+        deleted = Int64.add(deleted, Int64.ofInt(1));
     }
-	
-	public function isActive(entityId:Int):Bool
-	{
-		return entities[entityId] != null;
-	}
-	
-	public function isEnabled(entityId:Int):Bool
-	{
-		return !disabled.get(entityId);
-	}
-	
-	private function getEntity(entityId:Int):Entity
-	{
-		return entities[entityId];
-	}
-	
+
+    //Returns whether the Entity (given entityId) is active.
+    //  Active means the entity is being actively processed.
+    public function isActive( entityId : Int ) : Bool {
+        return entities[ entityId ] != null;
+    }
+
+    //Check if the specified entityId is enabled.
+    //  Enabled means...
+    public function isEnabled( entityId : Int ) : Bool {
+        return !disabled.get( entityId );
+    }
+
+    // Get how many entities are active in this world.
+    public function getActiveEntityCount() : Int {
+        return active;
+    }
+
+    // Get how many entities have been created in the world since start.
+    //  created entities >= added entities, since a created entity is not always added
+    public function getTotalCreated() : Int64 {
+        return created;
+    }
+
+    // Get how many entities have been added to the world since start.
+    public function getTotalAdded() : Int64 {
+        return added;
+    }
+
+    // Get how many entities have been deleted from the world since start.
+    public function getTotalDeleted() : Int64 {
+        return deleted;
+    }
+
+    private function getEntity( entityId : Int ) : Entity {
+        var e = entities[ entityId ];
+        #if debug
+        if ( e == null ) {
+            throw "Queried entity does not exist."
+        }
+        #end
+        return e;
+    }
 }
 
 private class IdentifierPool

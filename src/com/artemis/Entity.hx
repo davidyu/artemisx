@@ -17,12 +17,12 @@ class Entity {
      * In such cases we should write a data structure for an unconstrained bitset.
      */
 
-    private var world; //: World;
+    private var world : World;
     private var entityManager : EntityManager;
 
     private var uuid : String;
 
-    public function new( World, id ) {
+    public function new( world : World, id : Int ) {
         this.world = world;
         this.id = id;
     }
@@ -88,6 +88,6 @@ class Entity {
     }
 
     public function getWorld() {
-        //TODO
+        return world;
     }
 }

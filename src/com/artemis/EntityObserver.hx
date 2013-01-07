@@ -1,3 +1,5 @@
+package com.artemis;
+
 /**
  *
  * The EntityObserver interface. Used for subscribing/listening to entity events
@@ -6,19 +8,17 @@
  *
  */
 
-package com.artemis;
 
 interface EntityObserver {
 
-    function added(Entity e);
+    function added( e : Entity ) : Void;
 
-    function changed(Entity e);
+    function changed( e : Entity ) : Void;
 
-    function deleted(Entity e);
+    function deleted( e : Entity ) : Void;
 
-    function enabled(Entity e);
+    function enabled( e : Entity ) : Void;
 
-    function disabled(Entity e);
-
+    function disabled( e : Entity ) : Void;
 }
 

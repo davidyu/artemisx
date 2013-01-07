@@ -1,4 +1,5 @@
 package com.artemis;
+
 import haxe.FastList;
 import haxe.Int64;
 
@@ -9,7 +10,6 @@ import haxe.Int64;
  *  ported to HaXe by Lewen Yu
  *
  */
-
 
 class EntityManager extends Manager {
     private var entities : TArray<Entity>;
@@ -22,7 +22,7 @@ class EntityManager extends Manager {
 
     private var identifierPool : IdentifierPool;
 
-    public new() {
+    public function new() {
         entities = new TArray<Entity>();
         disabled = new Bitset( 1 );
         identifierPool = new IdentifierPool();
@@ -31,7 +31,7 @@ class EntityManager extends Manager {
     override private function initialize() { }
 
     private function createEntityInstance() : Entity {
-        Entity e = new Entity( world, identifierPool.checkout() );
+        var e = new Entity( world, identifierPool.checkout() );
         created++;
         return e;
     }
@@ -90,7 +90,7 @@ class EntityManager extends Manager {
     }
 
     // Get how many entities have been deleted from the world since start.
-    public long getTotalDeleted() {
+    public function getTotalDeleted() : Int64 {
         return deleted;
     }
 

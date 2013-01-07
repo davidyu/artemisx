@@ -9,12 +9,11 @@ package com.artemis;
  */
 
 class Manager implements EntityObserver {
-    
-    private var world;
+    private var world : World;
 
-    private function initialize(); //I expect this to be overriden
+    private function initialize() { } //I expect this to be overriden
 
-    private function setWorld(World world) {
+    private function setWorld( world : World ) {
         this.world = world;
     }
 
@@ -22,19 +21,14 @@ class Manager implements EntityObserver {
         return world;
     }
 
-    public function added(Entity e) {
-    }
+    public function added( e : Entity ) { }
 
-    public function changed(Entity e) {
-    }
+    public function changed( e : Entity ) { }
 
-    public function deleted(Entity e) {
-    }
+    public function deleted( e : Entity ) { }
 
-    public function disabled(Entity e) {
-    }
+    public function enabled( e : Entity ) { }
 
-    public function enabled(Entity e) {
-    }
+    public function disabled( e : Entity ) { }
 }
 

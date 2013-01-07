@@ -3,11 +3,15 @@ package ;
 import com.artemis.Component;
 import com.artemis.ComponentType;
 import com.artemis.Entity;
+import com.utils.Bag;
 import com.utils.Bitset;
 import com.utils.ClassHash;
+import com.utils.TArray;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
+
+using com.utils.TArrayHelper;
 
 /**
  * ...
@@ -23,7 +27,15 @@ class Main
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		
-		testClassHash();
+		//testArray();
+		var e = new Bag();
+	}
+	
+	static function testArray()
+	{
+		var t:TArray<Int> = new TArray();
+		t.insertAt(10, 5);
+		trace(t);
 	}
 	
 	static function testClassHash()

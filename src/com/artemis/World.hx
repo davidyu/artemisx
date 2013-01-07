@@ -6,7 +6,7 @@ import com.utils.TArray;
 class World 
 {
 	public var em(default, null):EntityManager;
-	public var cm:ComponentManager;
+	public var cm(default, null):ComponentManager;
 	
 	public var delta:Float;
 	
@@ -31,11 +31,7 @@ class World
 	{
 		
 	}
-	
-	public function getComponentManager():ComponentManager
-	{
-		
-	}
+
 	
 	public function getManager(managerType:Class<Manager>) {
 		

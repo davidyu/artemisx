@@ -58,10 +58,6 @@ class Entity {
     }
 
     public function isActive() : Bool {
-		return true;
-    }
-
-    public function isEnabled() : Bool {
         return entityManager.isActive( id );
     }
 

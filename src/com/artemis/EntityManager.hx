@@ -17,10 +17,10 @@ class EntityManager extends Manager {
     private var entities : TArray<Entity>;
     private var disabled : Bitset;
 
-    private var active : Int;
-    private var added : Int64;
-    private var created :Int64;
-    private var deleted :Int64;
+    private var active (default, null) : Int;
+    private var added (default, null) : Int64;
+    private var created (default, null) :Int64;
+    private var deleted (default, null) :Int64;
 
     private var identifierPool : IdentifierPool;
 
@@ -28,31 +28,37 @@ class EntityManager extends Manager {
         entities = new TArray<Entity>();
         disabled = new Bitset( 1 );
         identifierPool = new IdentifierPool();
+        initialize();
     }
 
-    override private function initialize() { }
+    override private function initialize() {
+        active = 0;
+        added = Int64.ofInt( 0 );
+        created = Int64.ofInt( 0 );
+        deleted = Int64.ofInt( 0 );
+    }
 
-    private function createEntityInstance() : Entity {
+    public function createEntityInstance() : Entity {
         var e = new Entity( world, identifierPool.checkout() );
-        created++;
+        created = Int64.add( created, Int64.ofInt( 1 ) );
         return e;
     }
 
-    override public function added( e : Entity ) {
+    override public function onAdded( e:Entity ) {
         active++;
-        added++;
+        added = Int64.add( added, Int64.ofInt( 1 ) );
         entities.insert( e.getId(), e );
     }
 
-    override public function enabled( e : Entity ) {
+    override public function onEnabled( e : Entity ) {
         disabled.unset( e.getId() );
     }
 
-    override public function disabled( e : Entity ) {
+    override public function onDisabled( e : Entity ) {
         disabled.set( e.getId() );
     }
 
-    override public function deleted( e : Entity ) {
+    override public function onDeleted( e : Entity ) {
         entities.insert( e.getId(), null );
 
         disabled.unset( e.getId() );
@@ -60,7 +66,7 @@ class EntityManager extends Manager {
         identifierPool.checkin( e.getId() );
 
         active--;
-        deleted++;
+        deleted = Int64.add(deleted, Int64.ofInt(1));
     }
 
     //Returns whether the Entity (given entityId) is active.

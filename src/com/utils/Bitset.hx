@@ -2,6 +2,9 @@ package com.utils;
 
 import com.utils.TArray;
 
+//only used once in ensureCapacity, consider changing type
+typedef INT_TYPE = #if flash9 UInt #else Int #end
+
 // Bit set class based on 
 // http://javasourcecode.org/html/open-source/mahout/mahout-0.5/org/apache/mahout/cf/taste/impl/common/BitSet.java.html
 class Bitset 
@@ -11,15 +14,13 @@ class Bitset
 
     private var bits:TArray<Int>;
 
-    public function new(numBits:Int) 
-    {
+    public function new(numBits:Int) {
         bits = new TArray();
         ensureCapacity(numBits);
     }
 
-    public inline function ensureCapacity(index:Int):Void
-    {
-        var intsToAdd:UInt = index >> powertwo;
+    public inline function ensureCapacity(index:Int):Void {
+        var intsToAdd : INT_TYPE = index >> powertwo;
         if ((index & (bitsInInt)) != 0) {
             intsToAdd++;
         }

@@ -1,6 +1,6 @@
 package com.artemis;
 
-import com.util.Bitset;
+import com.utils.Bitset;
 import StdTypes;
 
 /**
@@ -17,28 +17,29 @@ import StdTypes;
 
 class Aspect
 {
-    private var allSet : Bitset;
-    private var exclusionSet : Bitset;
-    private var oneSet : Bitset;
+    private var allSet (null, null) : Bitset;
+    private var exclusionSet (null, null) : Bitset;
+    private var oneSet (null, null) : Bitset;
 
-    private new()
+    private function new()
     {
         this.allSet = new Bitset();
         this.exclusionSet = new Bitset();
         this.oneSet = new Bitset();
     }
 
-    private function getAllSet() : Bitset
+    //gotcha: getAllSet, getExclusionSet, getOneSet are declared protected in Ari's canonical implementation.
+    public function getAllSet() : Bitset
     {
         return allSet;
     }
 
-    private function getExclusionSet() : Bitset
+    public function getExclusionSet() : Bitset
     {
         return exclusionSet;
     }
 
-    private getOneSet() : Bitset
+    public function getOneSet() : Bitset
     {
         return oneSet;
     }
@@ -46,10 +47,8 @@ class Aspect
     //TODO: figure out how to implement generics, even if with ClassHash
     //Small gotcha: in contrast with Ari's cannonical implementation, the types
     //parameter is an iterable rather than zero-or-more actual parameters
-    public function all(type : Dynamic, ?types : Iterable<Dynamic>) : Aspect
+    public function all(types : Iterable<Class<Component>>) : Aspect
     {
-        allSet.set(ComponentType.getIndexFor(type));
-
         if (types != null)
         {
             for (t in types)
@@ -61,9 +60,8 @@ class Aspect
         return this;
     }
 
-    public function exclude(type : Class<Component>, ?types : Iterable<Class<Component>>) : Aspect
+    public function exclude(types : Iterable<Class<Component>>) : Aspect
     {
-        exclusionSet.set(ComponentType.getIndexFor(type));
         if (types != null)
         {
             for (t in types)
@@ -75,9 +73,8 @@ class Aspect
         return this;
     }
 
-    public function one(type : Class<Component>, ?types : Iterable<Class<Component>>) : Aspect
+    public function one(types : Iterable<Class<Component>>) : Aspect
     {
-        oneSet.set(ComponentType.getIndexFor(type));
         if (types != null)
         {
             for (t in types)
@@ -89,17 +86,17 @@ class Aspect
         return this;
     }
 
-    public static function getAspectForAll(type : Class<Component>, ?types : Iterable<Class<Component>>) : Aspect
+    public static function getAspectForAll(types : Iterable<Class<Component>>) : Aspect
     {
-        Aspect aspect = new Aspect();
-        aspect.all(type, types);
+        var aspect = new Aspect();
+        aspect.all(types);
         return aspect;
     }
 
-    public static function getAspectForOne(type : Class<Component>, ?types : Iterable<Class<Component>>) : Aspect
+    public static function getAspectForOne(types : Iterable<Class<Component>>) : Aspect
     {
-        Aspect aspect = new Aspect();
-        aspect.all(type, types);
+        var aspect = new Aspect();
+        aspect.one(types);
         return aspect;
     }
 

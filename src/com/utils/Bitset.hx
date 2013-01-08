@@ -14,7 +14,7 @@ class Bitset
 
     private var bits:TArray<Int>;
 
-    public function new(numBits:Int) {
+    public function new(?numBits:Int=1) {
         bits = new TArray();
         ensureCapacity(numBits);
     }

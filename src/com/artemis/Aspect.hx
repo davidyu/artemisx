@@ -17,9 +17,9 @@ import StdTypes;
 
 class Aspect
 {
-    private var allSet (null, null) : Bitset;
-    private var exclusionSet (null, null) : Bitset;
-    private var oneSet (null, null) : Bitset;
+    public var allSet (getAllSet, null) : Bitset;
+    public var exclusionSet (getExclusionSet, null) : Bitset;
+    public var oneSet (getOneSet, null) : Bitset;
 
     private function new()
     {
@@ -28,7 +28,8 @@ class Aspect
         this.oneSet = new Bitset();
     }
 
-    //gotcha: getAllSet, getExclusionSet, getOneSet are declared protected in Ari's canonical implementation.
+    //gotcha: getAllSet, getExclusionSet, getOneSet are declared protected in Ari's canonical implementation
+    // but they are accessible by Systems, to circumvent HaXe's restriction on private methods I have made them public.
     public function getAllSet() : Bitset
     {
         return allSet;

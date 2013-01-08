@@ -44,7 +44,6 @@ class Aspect
         return oneSet;
     }
 
-    //TODO: figure out how to implement generics, even if with ClassHash
     //Small gotcha: in contrast with Ari's cannonical implementation, the types
     //parameter is an iterable rather than zero-or-more actual parameters
     public function all(types : Iterable<Class<Component>>) : Aspect

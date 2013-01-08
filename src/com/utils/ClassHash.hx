@@ -58,5 +58,4 @@ class ClassHash<K, V>
 			l.add(f(x));
 		return l.iterator();
 	}
-	
 }

@@ -7,7 +7,6 @@ package com.artemis;
 
 class ComponentManager 
 {
-
 	public function new() 
 	{
 		

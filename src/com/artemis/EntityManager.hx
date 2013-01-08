@@ -75,7 +75,7 @@ class EntityManager extends Manager {
     }
 
     //Check if the specified entityId is enabled.
-    //  Enabled means...
+    //  Enabled means...what? enabled -> active but active -/> enabled?
     public function isEnabled( entityId : Int ) : Bool {
         return !disabled.get( entityId );
     }

@@ -7,7 +7,7 @@ typedef INT_TYPE = #if flash9 UInt #else Int #end
 
 // Bit set class based on 
 // http://javasourcecode.org/html/open-source/mahout/mahout-0.5/org/apache/mahout/cf/taste/impl/common/BitSet.java.html
-class Bitset 
+class Bitset
 {
     private static inline var bitsInInt:Int = 0x1F;
     private static inline var powertwo:Int = 0x5;

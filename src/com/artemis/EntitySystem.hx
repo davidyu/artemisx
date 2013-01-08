@@ -5,12 +5,11 @@ package com.artemis;
  * @author 
  */
 
-class EntitySystem 
+class EntitySystem implements EntityObserver.hx
 {
+    public function new() 
+    {
+        
+    }
 
-	public function new() 
-	{
-		
-	}
-	
 }

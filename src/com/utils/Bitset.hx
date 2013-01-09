@@ -24,7 +24,7 @@ class Bitset
         if ((index & (bitsInInt)) != 0) {
             intsToAdd++;
         }
-        if (intsToAdd > bits.length) {
+        if (intsToAdd > Std.int(bits.length)) {
             intsToAdd -= bits.length;
             for (i in 0...intsToAdd) {
                 bits.push(0);

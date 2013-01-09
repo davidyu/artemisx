@@ -1,8 +1,10 @@
 package ;
 
 import com.artemis.Component;
+import com.artemis.ComponentMapper;
 import com.artemis.ComponentType;
 import com.artemis.Entity;
+import com.artemis.World;
 import com.utils.Bag;
 import com.utils.Bitset;
 import com.utils.ClassHash;
@@ -28,7 +30,12 @@ class Main
 		stage.align = StageAlign.TOP_LEFT;
 		
 		//testArray();
-		var e = new Bag();
+		testComponentMapper();
+	}
+	
+	static function testComponentMapper()
+	{
+		ComponentMapper.getFor(TestComp, new World());
 	}
 	
 	static function testArray()

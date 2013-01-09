@@ -11,7 +11,7 @@ import com.utils.UUID;
  */
 
 class Entity {
-    private var id : Int;
+    public var id(getId, null) : Int;
     private var componentBits : Int;
     private var systemBits : Int;
 

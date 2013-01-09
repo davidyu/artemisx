@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemis.test;
 
 import com.utils.Bag;
 

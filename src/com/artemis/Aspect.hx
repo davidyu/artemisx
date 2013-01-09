@@ -15,6 +15,7 @@ import StdTypes;
  * ported to HaXe by Lewen Yu
  */
 
+@:allow(com.artemis.test.TestAspect) //test hook
 class Aspect
 {
     public var allSet (getAllSet, null) : Bitset;
@@ -28,19 +29,17 @@ class Aspect
         this.oneSet = new Bitset();
     }
 
-    //gotcha: getAllSet, getExclusionSet, getOneSet are declared protected in Ari's canonical implementation
-    // but they are accessible by Systems, to circumvent HaXe's restriction on private methods I have made them public.
-    public function getAllSet() : Bitset
+    private function getAllSet() : Bitset
     {
         return allSet;
     }
 
-    public function getExclusionSet() : Bitset
+    private function getExclusionSet() : Bitset
     {
         return exclusionSet;
     }
 
-    public function getOneSet() : Bitset
+    private function getOneSet() : Bitset
     {
         return oneSet;
     }

@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemis.test;
 
 class ArtemisTest {
     static function main() {

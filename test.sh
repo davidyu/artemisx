@@ -2,13 +2,6 @@
 
 TESTPATH=src/com/artemis/test
 
-# copy files; hacky
-TESTFILES=$TESTPATH/*.hx
-for f in $TESTFILES
-do
-    cp $f $TESTPATH/..
-done
-
 # save working directory
 DIR=$( pwd )
 
@@ -18,9 +11,3 @@ neko test.n
 
 # go back
 cd $DIR
-
-# cleanup
-for f in $TESTFILES
-do
-    rm $TESTPATH/../$(basename $f)
-done

@@ -47,7 +47,7 @@ class EntityManager extends Manager {
     override public function onAdded( e:Entity ) {
         active++;
         added = Int64.add( added, Int64.ofInt( 1 ) );
-        entities.insert( e.getId(), e );
+        //entities.insert( e.getId(), e );
     }
 
     override public function onEnabled( e : Entity ) {
@@ -59,7 +59,7 @@ class EntityManager extends Manager {
     }
 
     override public function onDeleted( e : Entity ) {
-        entities.insert( e.getId(), null );
+        //entities.insert( e.getId(), null );
 
         disabled.unset( e.getId() );
 
@@ -105,7 +105,7 @@ class EntityManager extends Manager {
         var e = entities[ entityId ];
         #if debug
         if ( e == null ) {
-            throw "Queried entity does not exist."
+            throw "Queried entity does not exist.";
         }
         #end
         return e;

@@ -20,7 +20,7 @@ class Bitset
     }
 
     public inline function ensureCapacity(index:Int):Void {
-        var intsToAdd : INT_TYPE = index >> powertwo;
+        var intsToAdd : Int = index >> powertwo;
         if ((index & (bitsInInt)) != 0) {
             intsToAdd++;
         }
@@ -35,8 +35,9 @@ class Bitset
     public function get(index:Int):Bool
     {
         #if debug
-        if (index >> powertwo < Std.int(bits.length))
+        if (index >> powertwo < Std.int(bits.length)) {
             throw "Attempt to get element out of bounds";
+		}
         #end
         return (bits[index >> powertwo] & 1 << (index & bitsInInt)) != 0;
     }

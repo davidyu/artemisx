@@ -25,7 +25,6 @@ class World
     public function new()
     { }
 
-
     public function initalize():Void
     { }
 

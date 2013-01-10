@@ -30,7 +30,7 @@ class Bag<E> implements ImmutableBag<E>
     }
 
     //gotcha: in the canonical implementation this overloads remove; we changed this to removeElement for clarity.
-    public inline function removeElement(e:E):Bool
+    public function removeElement(e:E):Bool
     {
         for (index in 0...size)
         {

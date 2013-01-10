@@ -6,9 +6,20 @@ import com.utils.ImmutableBag;
 
 
 //Only used internally to maintain clean code.
-private interface Performer
+// caveat: use @Mapper(ComponentName) ComponentMapper annotation instead of @Mapper ComponentMapper<ComponentName>
+// takes each ComponentMapper field in the System and casts them into the correct Component.
+private class ComponentMapperInitHelper
 {
-    function perform(observer : EntityObserver, e : Entity) : Void;
+    public static function config<S : EntitySystem>(target : S, world : World)
+    {
+        var c : Class<S> = Type.getClass(target);
+        for ( f in Type.getClassFields(c) )
+        {
+            //...incomplete
+            var m = haxe.rtti.Meta.getType(f);
+            var componentType = Type.resolveClass(m.Mapper[0]);
+        }
+    }
 }
 
 class World
@@ -157,7 +168,8 @@ class World
     }
 
     // passive = true -> will not be processed by World
-    public function setSystem<T : EntitySystem> (system : T, passive : Bool) {
+    public function setSystem<T : EntitySystem> (system : T, passive : Bool)
+    {
         system.setWorld(this);
         system.setPassive(passive);
         systems.set(Type.getClass(system), system);
@@ -207,13 +219,14 @@ class World
         return null;
     }
 
-    private function check(entities : Bag<Entity>, method) : Void {
+    private function check(entities : Bag<Entity>, postMethod: EntityObserver -> Entity -> Void) : Void
+    {
         if (!entities.isEmpty()) {
             for (i in 0...entities.size)
             {
                 var e = entities.get(i);
-                notifyManagers(method, e);
-                notifySystems(method, e);
+                notifyManagers(postMethod, e);
+                notifySystems(postMethod, e);
             }
             entities.clear();
         }
@@ -260,5 +273,10 @@ class World
                 system.process();
             }
         }
+    }
+
+    public function getMapper<T : Component> (type : Class<T>) : ComponentMapper<T>
+    {
+        return ComponentMapper.getFor(type, this);
     }
 }

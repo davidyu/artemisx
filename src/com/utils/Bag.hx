@@ -28,6 +28,22 @@ class Bag<E> implements ImmutableBag<E>
 		data[data.length - 1] = null;
 		return e;
 	}
+
+    public inline function remove(e:Entity):Bool
+    {
+        for (index in 0...size)
+        {
+            var e2:E = data[index];
+            if (e2 == e)
+            {
+                data[index] = data[data.length - 1];
+                data[data.length - 1] = null;
+                return true;
+            }
+        }
+
+        return false;
+    }
 	
 	public inline function removeLast():E
 	{

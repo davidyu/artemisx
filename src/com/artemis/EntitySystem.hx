@@ -7,7 +7,14 @@ package com.artemis;
 
 class EntitySystem implements EntityObserver
 {
+    public var world (default, setWorld) : World;
+    public var passive(default, setPassive) : Bool;
+
     public function new() 
+    {
+    }
+
+    public function initialize()
     {
     }
 
@@ -29,6 +36,18 @@ class EntitySystem implements EntityObserver
 
     public function onEnabled( e:Entity )
     {
+    }
+
+    public function setWorld(world : World) : World
+    {
+        this.world = world;
+        return world;
+    }
+
+    public function setPassive(passive : Bool) : Bool
+    {
+        this.passive = passive;
+        return passive;
     }
 
 }

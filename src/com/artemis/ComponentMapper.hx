@@ -8,7 +8,7 @@ import haxe.macro.Type;
 class ComponentMapper<A:Component> implements haxe.rtti.Generic
 {
     private var type:ComponentType;
-    private var classType:Class<Dynamic>
+    private var classType:Class<Dynamic>;
     private var components:TArray<Component>;
 
     private function new(type:Class<Dynamic>, world:World)
@@ -18,7 +18,7 @@ class ComponentMapper<A:Component> implements haxe.rtti.Generic
         this.classType = type;
     }
 
-    public function get( e : Entity ) : Component
+    public function get( e : Entity ) : A
     {
         
     }

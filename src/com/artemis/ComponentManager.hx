@@ -5,7 +5,7 @@ package com.artemis;
  * @author 
  */
 
-class ComponentManager 
+class ComponentManager extends Manager
 {
 	public function new() 
 	{

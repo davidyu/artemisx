@@ -9,15 +9,18 @@ package com.artemis;
  */
 
 class Manager implements EntityObserver {
-    private var world : World;
+    public var world (getWorld, setWorld) : World;
 
-    private function initialize() : Void { }
+    //this function made public until Haxe's @:allow metadata feature is enabled
+    public function initialize() : Void { }
 
-    private function setWorld( world:World ) {
+    //note to self: world setter and getter are public until Haxe's @:allow metadata are enabled
+    public function setWorld( world:World ) : World {
         this.world = world;
+        return world;
     }
 
-    private function getWorld() {
+    public function getWorld() : World {
         return world;
     }
 

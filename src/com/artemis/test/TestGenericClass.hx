@@ -31,7 +31,7 @@ class TestGenericClass extends haxe.unit.TestCase {
         lst.add(new SubC());
 
 
-        var a : SubA = null;
+        var a : typeA = null;
 
         //NOTE TO SELF: you must enclose the cast within the Std.is conditional
         // see http://stackoverflow.com/questions/13374790/dynamic-cast-in-haxe

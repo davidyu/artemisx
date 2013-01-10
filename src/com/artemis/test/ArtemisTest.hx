@@ -6,7 +6,8 @@ class ArtemisTest {
         r.add( new TestUUID() );
         r.add( new TestEntityManager() );
         r.add( new TestAspect() );
-        r.add( new TestGenericClass() );
+        r.add( new TestWorld() );
+        //r.add( new TestComponentMapper() );
         r.run();
     }
 }

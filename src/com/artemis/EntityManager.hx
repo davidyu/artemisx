@@ -31,7 +31,7 @@ class EntityManager extends Manager {
         initialize();
     }
 
-    override private function initialize() {
+    override public function initialize() {
         active = 0;
         added = Int64.ofInt( 0 );
         created = Int64.ofInt( 0 );
@@ -101,7 +101,8 @@ class EntityManager extends Manager {
         return deleted;
     }
 
-    private function getEntity( entityId : Int ) : Entity {
+    // Scope set to public until Haxe 2.11 is released
+    public function getEntity( entityId : Int ) : Entity {
         var e = entities[ entityId ];
         #if debug
         if ( e == null ) {

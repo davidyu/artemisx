@@ -2,3 +2,6 @@ bin
 # vim swapfiles
 .swp
 .swo
+
+# stupid mac finder files
+.DS_STORE

@@ -14,14 +14,16 @@ class ComponentMapper<A:Component>
 	
 	public static function getFor<T:Component>(type:Class<T>, world:World)
 	{
-		var res:ComponentMapper<T> = new ComponentMapper<T>(type, world);
-		return res;
+		return new ComponentMapper<T>(type, world);
 	}
+
 
     private function new(type:Class<A>, world:World)
     {
-		//trace(type);
-        //this.type = ComponentType.getTypeFor(type);
+		// Use untyped to work around the loss of parameter constraint
+        this.type = ComponentType.getTypeFor(untyped type); 
+        components = world.getComponentManager().getComponentsByType(this.type)
+        this.classType = type;
     }
 	
 	public function get(e:Entity):A

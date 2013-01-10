@@ -1,3 +1,13 @@
+#!/bin/bash
+
 TESTPATH=src/com/artemis/test
-haxe $TESTPATH/test.hxml
-neko $TESTPATH/test.n
+
+# save working directory
+DIR=$( pwd )
+
+cd $TESTPATH
+haxe test.hxml
+neko test.n
+
+# go back
+cd $DIR

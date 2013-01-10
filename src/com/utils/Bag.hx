@@ -21,15 +21,16 @@ class Bag<E> implements ImmutableBag<E>
 	}
 	
 	// This function changes the index of elements... is that right?
-	public inline function remove(index:Int):E
-	{
-		var e:E = data[index];
-		data[index] = data[data.length - 1];
-		data[data.length - 1] = null;
-		return e;
-	}
+    public inline function remove(index:Int):E
+    {
+        var e:E = data[index];
+        data[index] = data[data.length - 1];
+        data[data.length - 1] = null;
+        return e;
+    }
 
-    public inline function remove(e:Entity):Bool
+    //gotcha: in the canonical implementation this overloads remove; we changed this to removeElement for clarity.
+    public inline function removeElement(e:E):Bool
     {
         for (index in 0...size)
         {

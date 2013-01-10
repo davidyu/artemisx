@@ -4,7 +4,7 @@ import com.utils.ClassHash;
 class ComponentType
 {
 	// Static members
-	private static var componentTypes:ClassHash<Component, ComponentType>;
+	private static var componentTypes:ClassHash<Component, ComponentType> = new ClassHash();
 	private static var INDEX:Int = 0;
 	
 	// Non-static members

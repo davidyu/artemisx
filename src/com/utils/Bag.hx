@@ -142,4 +142,9 @@ class Bag<E> implements ImmutableBag<E>
 		}
 	}
 	
+	public function toString():Void
+	{
+		trace(data);
+	}
+	
 }

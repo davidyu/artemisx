@@ -15,11 +15,6 @@ import flash.Lib;
 
 using com.utils.TArrayHelper;
 
-/**
- * ...
- * @author 
- */
-
 class Main 
 {
 	
@@ -29,13 +24,33 @@ class Main
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 		
-		//testArray();
-		testComponentMapper();
+		testBitset();
 	}
 	
 	static function testComponentMapper()
 	{
 		ComponentMapper.getFor(TestComp, new World());
+	}
+	
+	
+	static function testBag()
+	{
+		var b:Bag<Int> = new Bag();
+		b.add(5);
+		b.add(5);
+		b.add(5);
+		b.add(7);
+		b.set(10, 6);
+		b.remove(2);
+		b.toString();
+		
+		var b1:Bag<Int> = new Bag();
+		b1.add(7);
+		b1.add(6);
+		
+		b.removeAllIn(b1);
+		
+		b.toString();
 	}
 	
 	static function testArray()
@@ -64,9 +79,13 @@ class Main
 		bit.set(0);
 		bit.set(2);
 		bit.set(3);
-		trace(bit.get(0));
-		trace(bit.get(1));
-		trace(bit.get(32));
+		bit.set(62);
+		trace(bit.nextSetBit(0));
+		trace(bit.nextSetBit(3));
+		trace(bit.nextSetBit(4));
+		//trace(bit.get(0));
+		//trace(bit.get(1));
+		//trace(bit.get(32));
 		bit.toString();
 	}
 	

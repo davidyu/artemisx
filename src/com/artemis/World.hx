@@ -30,4 +30,7 @@ class World
 
     public function getManager(managerType:Class<Manager>)
     { }
+	
+	public function getComponentManager():ComponentManager
+	{ return cm;  }
 }

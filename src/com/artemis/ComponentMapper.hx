@@ -17,12 +17,11 @@ class ComponentMapper<A:Component>
 		return new ComponentMapper<T>(type, world);
 	}
 
-
     private function new(type:Class<A>, world:World)
     {
 		// Use untyped to work around the loss of parameter constraint
         this.type = ComponentType.getTypeFor(untyped type); 
-        components = world.getComponentManager().getComponentsByType(this.type)
+        components = world.cm.getComponentsByType(this.type);
         this.classType = type;
     }
 	

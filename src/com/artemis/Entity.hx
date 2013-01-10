@@ -1,5 +1,6 @@
 package com.artemis;
 
+import com.utils.Bitset;
 import com.utils.UUID;
 
 /**
@@ -12,8 +13,8 @@ import com.utils.UUID;
 
 class Entity {
     public var id(getId, null) : Int;
-    private var componentBits : Int;
-    private var systemBits : Int;
+    public var componentBits(getComponentBits, null) : Bitset;
+    private var systemBits : Bitset;
 
     /* Future: maybe we need more than 32 components in some given game.
      * In such cases we should write a data structure for an unconstrained bitset.
@@ -33,17 +34,17 @@ class Entity {
         return id;
     }
 
-    private function getComponentBits() : Int {
+    private function getComponentBits() : Bitset {
         return componentBits;
     }
 
-    private function getSystemBits() : Int {
+    private function getSystemBits() : Bitset {
         return systemBits;
     }
 
     private function reset() {
-        systemBits = 0;
-        componentBits = 0;
+        systemBits.clear();
+        componentBits.clear();
         uuid = UUID.getUuid();
     }
 

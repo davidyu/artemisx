@@ -42,7 +42,7 @@ class Bitset
 		
 	}
 	
-	public inline function nextSetBit(bitIndex:Int)
+	public function nextSetBit(bitIndex:Int)
 	{
 		var wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
 		var chunk = bits[wordIndex];

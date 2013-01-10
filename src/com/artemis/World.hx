@@ -242,13 +242,13 @@ class World
         check(enable,
               function (observer : EntityObserver, e : Entity) : Void
               {
-                 observer.enabled(e);
+                 observer.onEnabled(e);
               });
 
         check(deleted,
               function (observer : EntityObserver, e : Entity) : Void
               {
-                  observer.deleted(e);
+                  observer.onDeleted(e);
               });
 
         cm.clean();

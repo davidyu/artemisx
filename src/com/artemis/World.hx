@@ -10,14 +10,18 @@ import com.utils.ImmutableBag;
 // takes each ComponentMapper field in the System and casts them into the correct Component.
 private class ComponentMapperInitHelper
 {
-    public static function config<S : EntitySystem>(target : S, world : World)
+    public static function config(target : Dynamic, world : World)
     {
-        var c : Class<S> = Type.getClass(target);
-        for ( f in Type.getClassFields(c) )
+        for ( fieldName in Type.getInstanceFields(target) )
         {
-            //...incomplete
-            var m = haxe.rtti.Meta.getType(f);
-            var componentType = Type.resolveClass(m.Mapper[0]);
+            var fieldClass = Type.getClass( Reflect.field(target, fieldName) );
+            var annotation = haxe.rtti.Meta.getType(fieldClass);
+
+            if (annotation.Mapper[0] != null)
+            {
+                var componentType = Type.resolveClass(annotation.Mapper[0]);
+                Reflect.setField(target, fieldName, world.getMapper(componentType));
+            }
         }
     }
 }
@@ -71,7 +75,7 @@ class World
 
         for (i in 0...systemsBag.size)
         {
-            //ComponentMapperInitHelper.config(systemsBag.get(i), this);
+            ComponentMapperInitHelper.config(systemsBag.get(i), this);
             systemsBag.get(i).initialize();
         }
     }

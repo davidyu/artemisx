@@ -27,6 +27,11 @@ class Main
 		testBitset();
 	}
 	
+	
+	static function testWorld()
+	{
+		var w = new World();
+	}
 	static function testComponentMapper()
 	{
 		ComponentMapper.getFor(TestComp, new World());

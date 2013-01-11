@@ -208,15 +208,15 @@ class World
     }
 
     private function check(entities : Bag<Entity>, method) : Void {
-        if (!entities.isEmpty()) {
-            for (i in 0...entities.size)
-            {
-                var e = entities.get(i);
-                notifyManagers(method, e);
-                notifySystems(method, e);
-            }
-            entities.clear();
-        }
+        //if (!entities.isEmpty()) {
+            //for (i in 0...entities.size)
+            //{
+                //var e = entities.get(i);
+                //notifyManagers(method, e);
+                //notifySystems(method, e);
+            //}
+            //entities.clear();
+        //}
     }
 
     public function process() : Void
@@ -256,7 +256,7 @@ class World
         for (i in 0...systemsBag.size)
         {
             var system = systemsBag.get(i);
-            if (!system.isPassive()) {
+            if (!system.passive) {
                 system.process();
             }
         }

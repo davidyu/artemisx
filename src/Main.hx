@@ -81,16 +81,10 @@ class Main
 	{
 		// entry point
 		var bit = new Bitset(1);
-		bit.set(0);
-		bit.set(2);
-		bit.set(3);
-		bit.set(62);
+		bit.set(33);
 		trace(bit.nextSetBit(0));
-		trace(bit.nextSetBit(3));
+		trace(bit.nextClearBit(0));
 		trace(bit.nextSetBit(4));
-		//trace(bit.get(0));
-		//trace(bit.get(1));
-		//trace(bit.get(32));
 		bit.toString();
 	}
 	

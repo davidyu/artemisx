@@ -14,7 +14,7 @@ class Bitset
 {   
     private static inline var ADDRESS_BITS_PER_WORD:Int = 0x5;
 	private static inline var BITS_PER_WORD :Int = 1 << ADDRESS_BITS_PER_WORD;
-	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1;
+	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 5 bits used to shift
 
     private var bits:TArray<Int>;
 
@@ -24,12 +24,9 @@ class Bitset
     }
 
     public inline function ensureCapacity(bitIndex:Int):Void {
-        var intsToAdd : Int = bitIndex >> ADDRESS_BITS_PER_WORD;
+        var intsToAdd : Int = (bitIndex >> ADDRESS_BITS_PER_WORD) + 1;
 		
-        if ((bitIndex & (BIT_INDEX_MASK)) != 0) {
-            intsToAdd++;
-        }
-        if (intsToAdd > Std.int(bits.length)) {
+        if (intsToAdd >= Std.int(bits.length)) {
             intsToAdd -= bits.length;
             for (i in 0...intsToAdd) {
                 bits.push(0);
@@ -37,20 +34,33 @@ class Bitset
         }
     }
 	
-	public inline function nextClearBit(bitIndex:Int)
+	public inline function nextClearBit(fromIndex:Int)
 	{
-		
-	}
-	
-	public function nextSetBit(bitIndex:Int)
-	{
-		var wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
-		var chunk = bits[wordIndex];
+		var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
+		var chunk = ~bits[wordIndex] & (BIT_INDEX_MASK << fromIndex);
 		var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
 		
 		while (true) {
 			if (chunk != 0) {
-				return (wordIndex * BITS_PER_WORD) + chunk;
+				var t = numberOfTrailingZeros(chunk);
+				return (wordIndex * BITS_PER_WORD) + t;
+			} else if (++wordIndex >= bitsInUse) {
+				return -1;
+			}
+			chunk = ~bits[wordIndex];
+		}
+	}
+	
+	public function nextSetBit(fromIndex:Int)
+	{
+		var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
+		var chunk = bits[wordIndex] & (BIT_INDEX_MASK << fromIndex);
+		var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
+		
+		while (true) {
+			if (chunk != 0) {
+				var t = numberOfTrailingZeros(chunk);
+				return (wordIndex * BITS_PER_WORD) + t;
 			} else if (++wordIndex >= bitsInUse) {
 				return -1;
 			}
@@ -70,7 +80,7 @@ class Bitset
         return (bits[bitIndex >> ADDRESS_BITS_PER_WORD] & (1 << (bitIndex & BIT_INDEX_MASK))) != 0;
     }
 
-    public inline  function set(bitIndex:Int):Void
+    public inline function set(bitIndex:Int):Void
     {
         ensureCapacity(bitIndex);
         bits[bitIndex >> ADDRESS_BITS_PER_WORD] |= 1 << (bitIndex & BIT_INDEX_MASK);
@@ -95,8 +105,18 @@ class Bitset
         trace(bits);
     }
 	
+	// Find the number of zeroes after the lowest order one bit (rightmost)
+	// e.g. for 000100, returns 2... or should
 	public static inline function numberOfTrailingZeros(i:Int)
 	{
+		var n = 31;
+		var y, x;
 		
+		y = i <<16;	if (y != 0) { n -=16; x = y; } else { x = i >>> 16; }
+		y = x << 8; if (y != 0) { n -= 8; x = y; }
+		y = x << 4; if (y != 0) { n -= 4; x = y; }
+		y = x << 2; if (y != 0) { n -= 2; x = y; }
+		
+		return n - ((x << 1) >>> 31);
 	}
 }

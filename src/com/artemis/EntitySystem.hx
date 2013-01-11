@@ -49,5 +49,8 @@ class EntitySystem implements EntityObserver
         this.passive = passive;
         return passive;
     }
+	
+	public function process() { }
+	
 
 }

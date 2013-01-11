@@ -4,22 +4,21 @@ import com.utils.ClassHash;
 import com.utils.Bag;
 import com.utils.ImmutableBag;
 
-
-//Only used internally to maintain clean code.
-// caveat: use @Mapper(ComponentName) ComponentMapper annotation instead of @Mapper ComponentMapper<ComponentName>
 // takes each ComponentMapper field in the System and casts them into the correct Component.
+
+// caveat 1: use @Mapper(ComponentName) ComponentMapper annotation instead of @Mapper ComponentMapper<ComponentName>
+// caveat 2: also you must give the FULL class name (my.package.ComponentName instead of just ComponentName), this is a limitation of resolveClass
 private class ComponentMapperInitHelper
 {
     public static function config(target : Dynamic, world : World)
     {
-        for ( fieldName in Type.getInstanceFields(target) )
+        var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
+        for ( fieldName in Reflect.fields(annotations) )
         {
-            var fieldClass = Type.getClass( Reflect.field(target, fieldName) );
-            var annotation = haxe.rtti.Meta.getType(fieldClass);
-
-            if (annotation.Mapper[0] != null)
+            var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
+            if (componentClassName != null)
             {
-                var componentType = Type.resolveClass(annotation.Mapper[0]);
+                var componentType : Class<Dynamic> = Type.resolveClass(componentClassName);
                 Reflect.setField(target, fieldName, world.getMapper(componentType));
             }
         }
@@ -66,7 +65,7 @@ class World
         setManager(em);
     }
 
-    public function initalize():Void
+    public function initialize():Void
     {
         for (i in 0...managersBag.size)
         {

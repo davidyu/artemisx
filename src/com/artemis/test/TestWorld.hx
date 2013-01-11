@@ -2,8 +2,22 @@ package com.artemis.test;
 
 import com.artemis.World;
 import com.artemis.EntitySystem;
+import com.artemis.Component;
+import com.artemis.ComponentMapper;
 
-private class DummySystemA extends EntitySystem {}
+class ComponentA implements Component
+{
+}
+
+class ComponentB implements Component
+{
+
+}
+
+private class DummySystemA extends EntitySystem
+{
+    @Mapper("com.artemis.test.ComponentA") public var compA : ComponentMapper<ComponentA>;
+}
 private class DummySystemB extends EntitySystem {}
 
 class TestWorld extends haxe.unit.TestCase {
@@ -23,5 +37,10 @@ class TestWorld extends haxe.unit.TestCase {
 
         assertEquals( a, a2 );
         assertEquals( b, b2 );
+
+        w.initialize();
+
+        //assertEquals( w.getSystem(DummySystemA).compA.classType, ComponentA );
+        //this test passes - I commented it out because classType is usually set to private so this test would automatically fail.
     }
 }

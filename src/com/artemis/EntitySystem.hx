@@ -11,7 +11,7 @@ import com.utils.ImmutableBag;
 class EntitySystem implements EntityObserver
 {
     public var world (default, setWorld) : World;
-    public var passive(default, setPassive) : Bool;
+    public var passive(isPassive, setPassive) : Bool;
     public var actives : Bag<Entity>;
 
     public function new() 

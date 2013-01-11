@@ -18,7 +18,7 @@ private class ComponentMapperInitHelper
             var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
             if (componentClassName != null)
             {
-                var componentType : Class<Dynamic> = Type.resolveClass(componentClassName);
+                var componentType = Type.resolveClass(componentClassName);
                 Reflect.setField(target, fieldName, world.getMapper(componentType));
             }
         }

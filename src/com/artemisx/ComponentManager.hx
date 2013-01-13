@@ -3,6 +3,7 @@ package com.artemisx;
 import com.utils.Bag;
 import com.utils.Bitset;
 
+@:allow(com.artemisx)
 class ComponentManager extends Manager
 {
 	private var componentsByType:Bag<Bag<Component>>;		// Try Bag<IntHash<Component> later
@@ -14,11 +15,9 @@ class ComponentManager extends Manager
 		deleted = new Bag();
 	}
 	
-	override public function initialize() {
-		
-	}
+	override private function initialize() {}
 	
-	public function removeComponentsOfEntity(e:Entity):Void
+	private inline function removeComponentsOfEntity(e:Entity):Void
 	{
 		var componentBits:Bitset = e.componentBits;
 		var i = componentBits.nextSetBit(0);
@@ -31,21 +30,21 @@ class ComponentManager extends Manager
 		
 	}
 	
-	public function addComponent(e:Entity, type:ComponentType, component:Component)
+	private inline function addComponent(e:Entity, type:ComponentType, component:Component)
 	{
 		componentsByType.ensureCapacity(type.getIndex());
 		
 		var components:Bag<Component> = componentsByType.get(type.index);
-		
 		if (components == null) {
 			components = new Bag();
 			componentsByType.set(type.index, components);
 		}
 		components.set(e.id, component);
+		
 		e.componentBits.set(type.index);
 	}
 	
-	public function removeComponent(e:Entity, type:ComponentType):Void
+	private inline function removeComponent(e:Entity, type:ComponentType):Void
 	{
 		if (e.componentBits.get(type.index)) {
 			componentsByType.get(type.index).set(e.id, null);
@@ -53,10 +52,9 @@ class ComponentManager extends Manager
 		}
 	}
 	
-	public function getComponentsByType(type:ComponentType):Bag<Component>
+	private inline function getComponentsByType(type:ComponentType):Bag<Component>
 	{
 		var components = componentsByType.get(type.index);
-		
 		if (components != null) {
 			components = new Bag();
 			componentsByType.set(type.index, components);
@@ -64,17 +62,16 @@ class ComponentManager extends Manager
 		return null;
 	}
 	
-	public function getComponent(e:Entity, type:ComponentType)
+	private inline function getComponent(e:Entity, type:ComponentType)
 	{
 		var components = componentsByType.get(type.index);
-		
 		if (components != null) {
 			return components.get(e.id);
 		}
 		return null;
 	}
 	
-	public function getComponentsFor(e:Entity, fillBag:Bag<Component>):Bag<Component>
+	public inline function getComponentsFor(e:Entity, fillBag:Bag<Component>):Bag<Component>
 	{
 		var componentBits:Bitset = e.componentBits;
 		var i = componentBits.nextSetBit(0);
@@ -83,11 +80,10 @@ class ComponentManager extends Manager
 			fillBag.add(componentsByType.get(i).get(e.id));
 			i = componentBits.nextSetBit(i + 1);
 		}
-		
 		return fillBag;
 	}
 	
-	public function clean():Void
+	private function clean():Void
 	{
 		if (deleted.size > 0) {
 			for (i in 0...deleted.size) {
@@ -97,5 +93,5 @@ class ComponentManager extends Manager
 		}
 	}
 	
-	override public function onDeleted(e:Entity):Void { deleted.add(e); }
+	override public inline function onDeleted(e:Entity):Void { deleted.add(e); }
 }

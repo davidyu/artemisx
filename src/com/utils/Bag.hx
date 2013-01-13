@@ -20,37 +20,35 @@ class Bag<E> implements ImmutableBag<E>
 		
 	}
 	
-	// This function changes the index of elements... is that right?
+	// TODO Test this function. Swap and pop changes order, and some classes depend on e.id as index
     public inline function removeAt(index:Int):E
     {
         var e:E = data[index];
-        data[index] = data[data.length - 1];
-        data[data.length - 1] = null;
+        data[index] = data[--size];
+        data[size] = null;
         return e;
     }
 
-    //gotcha: in the canonical implementation this overloads remove; We have removeAt for index remove
+    // gotcha: in the canonical implementation this overloads remove; We have removeAt for index remove
     public inline function remove(e:E):Bool
     {
-        for (index in 0...size)
-        {
+        for (index in 0...size) {
             var e2:E = data[index];
             if (e2 == e)
             {
-                data[index] = data[data.length - 1];
-                data[data.length - 1] = null;
+                data[index] = data[--size];
+                data[size] = null;
                 return true;
             }
         }
-
         return false;
     }
 	
 	public inline function removeLast():E
 	{
-		if (data.length > 0) {
-			var e:E = data[data.length - 1];
-			data[data.length - 1] = null;
+		if (size > 0) {
+			var e:E = data[--size];
+			data[size] = null;
 			return e;
 		}
 		return null;
@@ -74,7 +72,7 @@ class Bag<E> implements ImmutableBag<E>
 			var e1:E = bag.get(i);
 			var j = 0;
 			
-			while (j < size) {
+			for (j in 0...size) {
 				var e2:E = data[j];
 				
 				if (e1 == e2) {
@@ -83,39 +81,25 @@ class Bag<E> implements ImmutableBag<E>
 					modified = true;
 					break;
 				}
-				j++;
 			}
 		}
-		
 		return modified;
 	}
 	
-	public inline function get(index:Int):E
-	{
-		return data[index];
-	}
+	public inline function get(index:Int):E { return data[index]; }
 	
-	public inline function getCapacity():Int
-	{
-		return data.length;
-	}
+	public inline function getCapacity():Int { return data.length; }
 	
-	public inline function isIndexWithinBounds(index:Int):Bool
-	{
-		return index < getCapacity();
-	}
+	public inline function isIndexWithinBounds(index:Int):Bool { return index < getCapacity(); }
 	
-	public inline function isEmpty():Bool
-	{
-		return size == 0;
-	}
+	public inline function isEmpty():Bool { size == 0; }
+
 	
 	public inline function add(e:E):Void
 	{
 		if (size == Std.int(data.length)) {
-			grow(size*2);
+			grow(size << 1);
 		}
-		
 		data[size++] = e;
 	}
 	
@@ -131,9 +115,8 @@ class Bag<E> implements ImmutableBag<E>
 	private inline function grow(newCapactiy:Int)
 	{
 		var numToAdd = newCapactiy - data.length;
-		while (numToAdd > 0) {
+		for (i in 0...numToAdd) {
 			data.push(null);
-			numToAdd--;
 		}
 	}
 	

@@ -2,6 +2,7 @@ package com;
 
 import com.artemisx.Aspect;
 import com.artemisx.Component;
+import com.artemisx.ComponentASS;
 import com.artemisx.ComponentMapper;
 import com.artemisx.ComponentType;
 import com.artemisx.Entity;
@@ -19,17 +20,21 @@ import flash.Lib;
 using com.utils.TArrayHelper;
 
 @:access(com.artemisx)
-@:access(com.artemisx.Aspect)
 class Main 
-{
-	
+{	
 	static function main() 
 	{
 		var stage = Lib.current.stage;
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
+	}
+	
+	static function opt<T:Component>(c:Class<T>):T
+	{
+		var v = new TestComp();
+		trace(Std.is(v, c));
 		
-		testSystem();
+		return null;
 	}
 	
 	static function testSystem()
@@ -42,9 +47,11 @@ class Main
 	{
 		var w = new World();
 	}
+	
 	static function testComponentMapper()
 	{
-		ComponentMapper.getFor(TestComp, new World());
+		var cm = ComponentMapper.getFor(ComponentASS, new World());
+		cm.getSafe(new Entity(new World(), 0));
 	}
 	
 	
@@ -110,9 +117,9 @@ class Main
 	
 }
 
-private class TestComp implements Component
+class TestComp implements Component
 {
-	
+	public function new() {}
 }
 
 private class TestComp2 implements Component

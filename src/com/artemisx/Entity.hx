@@ -15,10 +15,10 @@ import com.utils.UUID;
 @:allow(com.artemisx)
 class Entity 
 {
-	@:isVar public var uuid(get_uuid, null):String;
-    @:isVar public var id(get_id, null):Int;
-    @:isVar public var componentBits(get_componentBits, null):Bitset;
-    @:isVar public var systemBits(get_systemBits, null):Bitset;
+	@:isVar public var uuid (getUuid, null):String;
+    @:isVar public var id (getId, null):Int;
+    @:isVar public var componentBits (getComponentBits, null):Bitset;
+    @:isVar public var systemBits (getSystemBits, null):Bitset;
 
     private var world:World;
     private var entityManager:EntityManager;
@@ -66,13 +66,13 @@ class Entity
 		return this;
 	}
 	
-	public inline function get_uuid() { return uuid; }
-	public inline function get_id():Int { return id; }
+	public inline function getUuid() { return uuid; }
+	public inline function getId() { return id; }
 	
-	public inline function get_componentBits():Bitset { return componentBits; }
-    public inline function get_systemBits():Bitset { return systemBits; }
+	public inline function getComponentBits():Bitset { return componentBits; }
+    public inline function getSystemBits():Bitset { return systemBits; }
 	
-	public function get_world() { return world; }
+	public function getWorld() { return world; }
 	
 	public inline function getComponent(type:ComponentType):Component { return componentManager.getComponent(this, type); }
     public inline function getComponents(fillBag:Bag<Component>):Bag<Component> { return componentManager.getComponentsFor(this, fillBag); }

@@ -52,7 +52,7 @@ class ClassHash<K, V>
 	}
 	
 	// Not sure if there is better solution but Lambda.map does not allow iterator as parameter..
-	private static function mymap<A,B>(it:Iterator<A>, f:A -> B) : Iterator<B> {
+	private static inline function mymap<A,B>(it:Iterator<A>, f:A -> B) : Iterator<B> {
 		var l = new List<B>();
 		for( x in it )
 			l.add(f(x));

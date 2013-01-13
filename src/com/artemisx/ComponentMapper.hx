@@ -4,8 +4,7 @@ import com.artemisx.World;
 import com.artemisx.Component;
 import com.utils.Bag;
 
-// Maybe investigate component map creator instead of static to allow haxe.rtti.Generic
-
+@:allow(com.artemisx)
 class ComponentMapper<A:Component>
 {
     private var type:ComponentType;
@@ -25,12 +24,9 @@ class ComponentMapper<A:Component>
         this.classType = type;
     }
 
-	public function get(e:Entity):A
-	{
-		return untyped components.get(e.id);
-	}
+	public inline function get(e:Entity):A { return untyped components.get(e.id); }
 
-	public function getSafe(e:Entity):A
+	public inline function getSafe(e:Entity):A
 	{
 		if (components.isIndexWithinBounds(e.id)) {
 			return cast(components.get(e.id));
@@ -38,8 +34,5 @@ class ComponentMapper<A:Component>
 		return null;
 	}
 
-	public function has(e:Entity) 
-	{
-		return getSafe(e) != null;
-	}
+	public inline function has(e:Entity) { return getSafe(e) != null; }
 }

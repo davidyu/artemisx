@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemisx;
 import com.utils.ClassHash;
 
 class ComponentType

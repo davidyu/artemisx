@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemisx;
 
 interface Component 
 {

@@ -1,5 +1,6 @@
 package com.artemis.test;
 
+@:access(com.artemis)
 class ArtemisTest {
     static function main() {
         var r = new haxe.unit.TestRunner();

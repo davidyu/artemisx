@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemisx;
 
 import com.utils.ClassHash;
 import com.utils.Bag;
@@ -10,15 +10,15 @@ import com.utils.ImmutableBag;
 // caveat 2: also you must give the FULL class name (my.package.ComponentName instead of just ComponentName), this is a limitation of resolveClass
 private class ComponentMapperInitHelper
 {
-    public static function config(target : Dynamic, world : World)
+    public static function config(target:Dynamic, world : World)
     {
         var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
-        for ( fieldName in Reflect.fields(annotations) )
+        for (fieldName in Reflect.fields(annotations))
         {
             var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
             if (componentClassName != null)
             {
-                var componentType : Class<Dynamic> = Type.resolveClass(componentClassName);
+                var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
                 Reflect.setField(target, fieldName, world.getMapper(componentType));
             }
         }
@@ -27,10 +27,10 @@ private class ComponentMapperInitHelper
 
 class World
 {
-    public var em(default, null):EntityManager;
-    public var cm(default, null):ComponentManager;
+    public var entityManager(default, null):EntityManager;
+    public var componentManager(default, null):ComponentManager;
 
-    public var delta (getDelta, setDelta) : Float ;
+    public var delta (getDelta, setDelta):Float ;
 
     private var added:Bag<Entity>;
     private var changed:Bag<Entity>;
@@ -58,11 +58,11 @@ class World
         enable = new Bag<Entity>();
         disable = new Bag<Entity>();
 
-        cm = new ComponentManager();
-        setManager(cm);
+        componentManager = new ComponentManager();
+        setManager(componentManager);
 
-        em = new EntityManager();
-        setManager(em);
+        entityManager = new EntityManager();
+        setManager(entityManager);
     }
 
     public function initialize():Void
@@ -79,17 +79,17 @@ class World
         }
     }
 
-    public function getEntityManager() : EntityManager
+    public function getEntityManager():EntityManager
     {
-        return em;
+        return entityManager;
     }
 
-    public function getComponentManager() : ComponentManager
+    public function getComponentManager():ComponentManager
     {
-        return cm;
+        return componentManager;
     }
 
-    public function setManager<M : Manager> (manager : M) : M
+    public function setManager<M:Manager> (manager : M) : M
     {
         managers.set(Type.getClass(manager), manager);
         managersBag.add(manager);
@@ -97,9 +97,9 @@ class World
         return manager;
     }
 
-    public function getManager<M : Manager> (managerType:Class<M>) : M
+    public function getManager<M:Manager> (managerType:Class<M>) : M
     {
-        var man : M;
+        var man:M;
         if (Std.is(managers.get(managerType), managerType))
         {
             man = cast managers.get(managerType);
@@ -109,34 +109,34 @@ class World
         return null;
     }
 
-    public function deleteManager<M : Manager>(manager : M) : Void
+    public function deleteManager<M:Manager>(manager : M) : Void
     {
         managers.remove(Type.getClass(manager)); //not quite sure if this is correct, see canonical implementation
-        managersBag.removeElement(cast (manager, Manager));
+        managersBag.remove(untyped manager);
     }
 
-    public function getDelta() : Float
+    public function getDelta():Float
     {
         return delta;
     }
 
-    public function setDelta(delta : Float) : Float
+    public function setDelta(delta:Float) : Float
     {
         this.delta = delta;
         return delta;
     }
 
-    public function addEntity(e : Entity) : Void
+    public function addEntity(e:Entity) : Void
     {
         added.add(e);
     }
 
-    public function changedEntity(e : Entity) : Void
+    public function changedEntity(e:Entity) : Void
     {
         changed.add(e);
     }
 
-    public function deleteEntity(e : Entity) : Void {
+    public function deleteEntity(e:Entity) : Void {
         if (!deleted.contains(e))
         {
             deleted.add(e);
@@ -144,34 +144,34 @@ class World
     }
 
     //note: in the canonical implementation this is simply "enable"
-    public function addEnable(e : Entity) : Void
+    public function enableEntity(e:Entity) : Void
     {
         enable.add(e);
     }
 
     //note: in the canonical implementation this is simply "disable"
-    public function addDisable(e : Entity) : Void
+    public function disableEntity(e:Entity) : Void
     {
         disable.add(e);
     }
 
-    public function createEntity() : Entity
+    public function createEntity():Entity
     {
-        return em.createEntityInstance();
+        return entityManager.createEntityInstance();
     }
 
-    public function getEntity(entityId : Int) : Entity
+    public function getEntity(entityId:Int) : Entity
     {
-        return em.getEntity(entityId);
+        return entityManager.getEntity(entityId);
     }
 
-    public function getSystems() : ImmutableBag<EntitySystem>
+    public function getSystems():ImmutableBag<EntitySystem>
     {
         return systemsBag;
     }
 
     // passive = true -> will not be processed by World
-    public function setSystem<T : EntitySystem> (system : T, passive : Bool)
+    public function setSystem<T:EntitySystem> (system : T, ?passive : Bool = false) : T
     {
         system.setWorld(this);
         system.setPassive(passive);
@@ -180,21 +180,15 @@ class World
         return system;
     }
 
-    //note: function below is simply overloaded setSystem in the canonical implementation
-    public function setSystemToProcess<T:EntitySystem> (system : T)
-    {
-        return setSystem(system, false);
-    }
-
-    public function deleteSystem(system : EntitySystem) : Void
+    public function deleteSystem(system:EntitySystem) : Void
     {
         systems.remove(Type.getClass(system));
-        systemsBag.removeElement(system);
+        systemsBag.remove(system);
     }
 
     //note to self: in the canonical implementations of notifySystems and notifyManagers, Ari used a strange
     // loop condition. I've simplified it here. Hopefully I'm not shooting myself in the foot.
-    private function notifySystems(post: EntitySystem -> Entity -> Void, e : Entity) : Void
+    private function notifySystems(post: EntitySystem -> Entity -> Void, e:Entity) : Void
     {
         for (i in 0...systemsBag.size)
         {
@@ -202,7 +196,7 @@ class World
         }
     }
 
-    private function notifyManagers(post: Manager -> Entity -> Void, e : Entity) : Void
+    private function notifyManagers(post: Manager -> Entity -> Void, e:Entity) : Void
     {
         for(a in 0...managersBag.size)
         {
@@ -210,9 +204,9 @@ class World
         }
     }
 
-    public function getSystem<T : EntitySystem> (type : Class<T>) : T
+    public function getSystem<T:EntitySystem> (type : Class<T>) : T
     {
-        var sys : T;
+        var sys:T;
         if (Std.is(systems.get(type), type))
         {
             sys = cast systems.get(type);
@@ -222,8 +216,8 @@ class World
         return null;
     }
 
-    //private function check(entities : Bag<Entity>, method: EntityObserver -> Entity -> Void) : Void
-    private function check(entities : Bag<Entity>, method) : Void {
+    //private function check(entities:Bag<Entity>, method: EntityObserver -> Entity -> Void) : Void
+    private function check(entities:Bag<Entity>, method) : Void {
         //if (!entities.isEmpty()) {
             //for (i in 0...entities.size)
             //{
@@ -235,39 +229,39 @@ class World
         //}
     }
 
-    public function process() : Void
+    public function process():Void
     {
         check(added,
-              function (observer : EntityObserver, e : Entity) : Void
+              function (observer:EntityObserver, e : Entity) : Void
               {
                   observer.onAdded(e);
               });
 
         check(changed,
-              function (observer : EntityObserver, e : Entity) : Void
+              function (observer:EntityObserver, e : Entity) : Void
               {
                   observer.onChanged(e);
               });
 
         check(disable,
-              function (observer : EntityObserver, e : Entity) : Void
+              function (observer:EntityObserver, e : Entity) : Void
               {
                   observer.onDisabled(e);
               });
 
         check(enable,
-              function (observer : EntityObserver, e : Entity) : Void
+              function (observer:EntityObserver, e : Entity) : Void
               {
                  observer.onEnabled(e);
               });
 
         check(deleted,
-              function (observer : EntityObserver, e : Entity) : Void
+              function (observer:EntityObserver, e : Entity) : Void
               {
                   observer.onDeleted(e);
               });
 
-        cm.clean();
+        componentManager.clean();
 
         for (i in 0...systemsBag.size)
         {
@@ -278,7 +272,7 @@ class World
         }
     }
 
-    public function getMapper<T : Component> (type : Class<T>) : ComponentMapper<T>
+    public function getMapper<T:Component> (type : Class<T>) : ComponentMapper<T>
     {
         return ComponentMapper.getFor(type, this);
     }

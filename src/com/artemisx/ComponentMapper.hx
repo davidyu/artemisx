@@ -1,7 +1,7 @@
-package com.artemis;
+package com.artemisx;
 
-import com.artemis.World;
-import com.artemis.Component;
+import com.artemisx.World;
+import com.artemisx.Component;
 import com.utils.Bag;
 
 // Maybe investigate component map creator instead of static to allow haxe.rtti.Generic
@@ -21,7 +21,7 @@ class ComponentMapper<A:Component>
     {
 		// Use untyped to work around the loss of parameter constraint
         this.type = ComponentType.getTypeFor(untyped type); 
-        components = world.cm.getComponentsByType(this.type);
+        components = world.componentManager.getComponentsByType(this.type);
         this.classType = type;
     }
 

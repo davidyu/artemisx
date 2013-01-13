@@ -17,6 +17,7 @@ class Bitset
 	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 5 bits used to shift
 
     private var bits:TArray<Int>;
+	public var wordsInUse(default, null):Int;
 
     public function new(?numBits:Int=1) {
         bits = new TArray();
@@ -31,8 +32,20 @@ class Bitset
             for (i in 0...intsToAdd) {
                 bits.push(0);
             }
+			wordsInUse = bits.length;
         }
+		
     }
+	
+	public inline function intersects(set:Bitset) 
+	{
+		for (i in 0...Std.int(Math.min(bits.length, set.wordsInUse))) {
+			if ((bits[i] & set.bits[i]) != 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public inline function nextClearBit(fromIndex:Int)
 	{
@@ -67,8 +80,6 @@ class Bitset
 			chunk = bits[wordIndex];
 		}
 	}
-	
-
 
     public inline function get(bitIndex:Int):Bool
     {
@@ -90,6 +101,7 @@ class Bitset
     {
         ensureCapacity(bitIndex);
         bits[bitIndex >> ADDRESS_BITS_PER_WORD] &= ~(1 << (bitIndex & BIT_INDEX_MASK));
+		recalulateWordsInUse();
     }
 
     public function clear():Void
@@ -98,12 +110,33 @@ class Bitset
         for (i in 0...length) {
             bits[i] = 0;
         }
+		wordsInUse = 0;
     }
+	
+	public function isEmpty():Bool
+	{
+		for (i in bits) {
+			if (i != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private function recalulateWordsInUse()
+	{
+		var i = 0;
+		
+		while (i < Std.int(bits.length)) {
+			if (bits[i] != 0) {
+				break;
+			}
+			i++;
+		}
+		wordsInUse = i;
+	}
 
-    public function toString():Void
-    {
-        trace(bits);
-    }
+    public function toString():Void { trace(bits); }
 	
 	// Find the number of zeroes after the lowest order one bit (rightmost)
 	// e.g. for 000100, returns 2... or should

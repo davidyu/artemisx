@@ -1,4 +1,4 @@
-package com.artemis;
+package com.artemisx;
 
 import com.utils.Bitset;
 import StdTypes;
@@ -8,19 +8,19 @@ import StdTypes;
  * This may be conceptually difficult to understand, so read
  * Ari's comments about it here:
  *
- *    http://gamadu.com/artemis/manual.html#Aspect
- *    http://gamadu.com/artemis/javadoc/com/artemis/Aspect.html
+ *    http://gamadu.com/artemisx/manual.html#Aspect
+ *    http://gamadu.com/artemisx/javadoc/com/artemis/Aspect.html
  *
  * originally written by Arni Arent
  * ported to HaXe by Lewen Yu
  */
 
-@:allow(com.artemis.test.TestAspect) //test hook
+@:allow(com.artemisx)
 class Aspect
 {
-    public var allSet (getAllSet, null) : Bitset;
-    public var exclusionSet (getExclusionSet, null) : Bitset;
-    public var oneSet (getOneSet, null) : Bitset;
+    public var allSet (getAllSet, null):Bitset;
+    public var exclusionSet (getExclusionSet, null):Bitset;
+    public var oneSet (getOneSet, null):Bitset;
 
     private function new()
     {
@@ -29,42 +29,26 @@ class Aspect
         this.oneSet = new Bitset();
     }
 
-    private function getAllSet() : Bitset
-    {
-        return allSet;
-    }
-
-    private function getExclusionSet() : Bitset
-    {
-        return exclusionSet;
-    }
-
-    private function getOneSet() : Bitset
-    {
-        return oneSet;
-    }
+    private function getAllSet():Bitset { return allSet; }
+    private function getExclusionSet():Bitset { return exclusionSet; }
+    private function getOneSet():Bitset { return oneSet; }
 
     //Small gotcha: in contrast with Ari's cannonical implementation, the types
     //parameter is an iterable rather than zero-or-more actual parameters
-    public function all(types : Iterable<Class<Component>>) : Aspect
+    public function all(types:Iterable<Class<Component>>):Aspect
     {
-        if (types != null)
-        {
-            for (t in types)
-            {
+        if (types != null) {
+            for (t in types) {
                 allSet.set(ComponentType.getIndexFor(t));
             }
         }
-
         return this;
     }
 
-    public function exclude(types : Iterable<Class<Component>>) : Aspect
+    public function exclude(types:Iterable<Class<Component>>):Aspect
     {
-        if (types != null)
-        {
-            for (t in types)
-            {
+        if (types != null) {
+            for (t in types) {
                 exclusionSet.set(ComponentType.getIndexFor(t));
             }
         }
@@ -72,7 +56,7 @@ class Aspect
         return this;
     }
 
-    public function one(types : Iterable<Class<Component>>) : Aspect
+    public function one(types:Iterable<Class<Component>>):Aspect
     {
         if (types != null)
         {
@@ -85,21 +69,21 @@ class Aspect
         return this;
     }
 
-    public static function getAspectForAll(types : Iterable<Class<Component>>) : Aspect
+    public static function getAspectForAll(types:Iterable<Class<Component>>):Aspect
     {
         var aspect = new Aspect();
         aspect.all(types);
         return aspect;
     }
 
-    public static function getAspectForOne(types : Iterable<Class<Component>>) : Aspect
+    public static function getAspectForOne(types:Iterable<Class<Component>>):Aspect
     {
         var aspect = new Aspect();
         aspect.one(types);
         return aspect;
     }
 
-    public static function getEmpty() : Aspect
+    public static function getEmpty():Aspect
     {
         return new Aspect();
     }

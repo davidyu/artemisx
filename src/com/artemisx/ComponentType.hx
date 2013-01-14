@@ -1,6 +1,6 @@
 package com.artemisx;
 
-import com.utils.ClassHash;
+import com.artemisx.utils.ClassHash;
 
 @:allow(com.artemisx)
 class ComponentType

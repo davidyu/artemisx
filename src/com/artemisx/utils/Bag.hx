@@ -1,4 +1,4 @@
-package com.utils;
+package com.artemisx.utils;
 
 /**
  * Maybe one day there will be something faster and this class would allow us to
@@ -77,7 +77,6 @@ class Bag<E> implements ImmutableBag<E>
 				
 				if (e1 == e2) {
 					removeAt(j);
-					j--;
 					modified = true;
 					break;
 				}
@@ -92,7 +91,7 @@ class Bag<E> implements ImmutableBag<E>
 	
 	public inline function isIndexWithinBounds(index:Int):Bool { return index < getCapacity(); }
 	
-	public inline function isEmpty():Bool { size == 0; }
+	public inline function isEmpty():Bool { return size == 0; }
 
 	
 	public inline function add(e:E):Void

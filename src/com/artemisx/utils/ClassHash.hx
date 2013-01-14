@@ -1,4 +1,4 @@
-package com.utils;
+package com.artemisx.utils;
 
 /*
  * Wrapper for a Hash to allow Class types to be used as keys 

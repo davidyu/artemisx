@@ -1,4 +1,4 @@
-package com.utils;
+package com.artemisx.utils;
 
 
 class TArrayHelper<T> implements haxe.rtti.Generic

@@ -1,8 +1,8 @@
 package com.artemisx;
 
-import com.utils.Bag;
-import com.utils.Bitset;
-import com.utils.TArray;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.Bitset;
+import com.artemisx.utils.TArray;
 import haxe.FastList;
 import haxe.Int64;
 

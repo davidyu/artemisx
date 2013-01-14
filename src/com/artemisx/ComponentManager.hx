@@ -1,7 +1,7 @@
 package com.artemisx;
 
-import com.utils.Bag;
-import com.utils.Bitset;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.Bitset;
 
 @:allow(com.artemisx)
 class ComponentManager extends Manager

@@ -1,6 +1,6 @@
 package com.artemisx;
 
-import com.utils.Bitset;
+import com.artemisx.utils.Bitset;
 import StdTypes;
 
 /**

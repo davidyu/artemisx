@@ -1,8 +1,8 @@
 package com.artemisx;
 
-import com.utils.Bag;
-import com.utils.Bitset;
-import com.utils.UUID;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.Bitset;
+import com.artemisx.utils.UUID;
 
 /**
  *

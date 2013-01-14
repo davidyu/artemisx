@@ -1,16 +1,16 @@
 package com.artemisx;
 
-import com.utils.Bag;
-import com.utils.Bitset;
-import com.utils.ClassHash;
-import com.utils.ImmutableBag;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.Bitset;
+import com.artemisx.utils.ClassHash;
+import com.artemisx.utils.ImmutableBag;
 
 @:allow(com.artemisx)
 class EntitySystem implements EntityObserver
 {
-    @:isVar public 	var actives (get_actives, null): Bag<Entity>;
-	@:isVar public 	var world (null, set_world):World;
-	@:isVar public 	var passive (isPassive, set_passive):Bool;
+    @:isVar public 	var actives (getActives, null): Bag<Entity>;
+	@:isVar public 	var world (null, setWorld):World;
+	@:isVar public 	var passive (isPassive, setPassive):Bool;
 	
 	private var aspect:Aspect;
 	private var dummy:Bool; // Variable for performance

@@ -2,22 +2,29 @@ package com;
 
 import com.artemisx.Aspect;
 import com.artemisx.Component;
-import com.artemisx.ComponentASS;
 import com.artemisx.ComponentMapper;
 import com.artemisx.ComponentType;
 import com.artemisx.Entity;
 import com.artemisx.EntityManager;
 import com.artemisx.EntitySystem;
+import com.artemisx.managers.GroupManager;
+import com.artemisx.managers.PlayerManager;
+import com.artemisx.managers.TagManager;
+import com.artemisx.managers.PlayerManager;
+import com.artemisx.systems.DelayedEntityProcessingSystem;
+import com.artemisx.systems.EntityProcessingSystem;
+import com.artemisx.systems.IntervalEntityProcessingSystem;
+import com.artemisx.systems.VoidEntitySystem;
 import com.artemisx.World;
-import com.utils.Bag;
-import com.utils.Bitset;
-import com.utils.ClassHash;
-import com.utils.TArray;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.Bitset;
+import com.artemisx.utils.ClassHash;
+import com.artemisx.utils.TArray;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.Lib;
 
-using com.utils.TArrayHelper;
+using com.artemisx.utils.TArrayHelper;
 
 @:access(com.artemisx)
 class Main 
@@ -27,14 +34,14 @@ class Main
 		var stage = Lib.current.stage;
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
+		
+		opt();
 	}
 	
-	static function opt<T:Component>(c:Class<T>):T
+	static function opt()
 	{
-		var v = new TestComp();
-		trace(Std.is(v, c));
-		
-		return null;
+		var g = new PlayerManager();
+		var t = new DelayedEntityProcessingSystem(new Aspect());
 	}
 	
 	static function testSystem()
@@ -50,8 +57,6 @@ class Main
 	
 	static function testComponentMapper()
 	{
-		var cm = ComponentMapper.getFor(ComponentASS, new World());
-		cm.getSafe(new Entity(new World(), 0));
 	}
 	
 	

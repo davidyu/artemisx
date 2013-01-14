@@ -2,7 +2,7 @@ package com.artemisx;
 
 import com.artemisx.World;
 import com.artemisx.Component;
-import com.utils.Bag;
+import com.artemisx.utils.Bag;
 
 @:allow(com.artemisx)
 class ComponentMapper<A:Component>

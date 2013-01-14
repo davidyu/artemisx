@@ -1,4 +1,4 @@
-package com.utils;
+package com.artemisx.utils;
 
 
 interface ImmutableBag<E>

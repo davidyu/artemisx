@@ -34,7 +34,7 @@
  * http://en.wikipedia.org/wiki/UUID#Version_4_.28random.29
  */
 
-package com.utils;
+package com.artemisx.utils;
 
 class UUID {
     private inline static var M31 = 2147483647.0; //Mersenne Prime with exponent 31

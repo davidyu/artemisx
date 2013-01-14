@@ -1,6 +1,6 @@
-package com.utils;
+package com.artemisx.utils;
 
-import com.utils.TArray;
+import com.artemisx.utils.TArray;
 
 //only used once in ensureCapacity, consider changing type
 typedef INT_TYPE = #if flash9 UInt #else Int #end

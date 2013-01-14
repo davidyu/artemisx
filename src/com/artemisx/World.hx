@@ -1,8 +1,8 @@
 package com.artemisx;
 
-import com.utils.ClassHash;
-import com.utils.Bag;
-import com.utils.ImmutableBag;
+import com.artemisx.utils.ClassHash;
+import com.artemisx.utils.Bag;
+import com.artemisx.utils.ImmutableBag;
 
 // TODO Test this thoroughly
 // takes each ComponentMapper field in the System and casts them into the correct Component.
@@ -182,7 +182,7 @@ class World
     public inline function setSystem<T:EntitySystem> (system:T, ?passive : Bool = false) : T
     {
         system.world = this;
-        system.set_passive(passive);
+        system.setPassive(passive);
         systems.set(Type.getClass(system), system);
         systemsBag.add(system);
         return system;
@@ -210,7 +210,7 @@ class World
         }
     }
 
-	public inline function getSystemSafe<T:EntitySystem> (type:Class<T>):T
+	public inline function getSystem<T:EntitySystem> (type:Class<T>):T
     {
 		return cast(systems.get(type));
     }

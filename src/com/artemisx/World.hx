@@ -12,25 +12,23 @@ private class ComponentMapperInitHelper
 {
     public static function config(target:Dynamic, world:World)
     {
-		try {
-			var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
-			
-			for (fieldName in Reflect.fields(annotations)) {
-				var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
-				
-				if (componentClassName != null) {
-					var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
-					Reflect.setField(target, fieldName, world.getMapper(componentType));
-				}
-			}
-		} catch (msg:String) {
-			trace("Error in CompError while setting component mappers: " + msg);
-		}
+        try {
+            var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
+            
+            for (fieldName in Reflect.fields(annotations)) {
+                var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
+                
+                if (componentClassName != null) {
+                    var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
+                    Reflect.setField(target, fieldName, world.getMapper(componentType));
+                }
+            }
+        } catch (msg:String) {
+            trace("Error in CompError while setting component mappers: " + msg);
+        }
     }
 }
 
-// No protected members here, so no need to allow;
-// @:allow(com.artemisx)
 class World
 {
     @:isVar public var entityManager(default, null):EntityManager;

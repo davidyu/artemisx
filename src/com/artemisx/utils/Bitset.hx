@@ -74,7 +74,7 @@ class Bitset
 			if (chunk != 0) {
 				var t = numberOfTrailingZeros(chunk);
 				return (wordIndex * BITS_PER_WORD) + t;
-			} else if (++wordIndex >= bitsInUse) {
+			} else if (++wordIndex >= wordsInUse) {
 				return -1;
 			}
 			chunk = bits[wordIndex];
@@ -84,7 +84,7 @@ class Bitset
     public inline function get(bitIndex:Int):Bool
     {
         #if debug
-        if (bitIndex >> ADDRESS_BITS_PER_WORD < Std.int(bits.length)) {
+        if (bitIndex >> ADDRESS_BITS_PER_WORD > Std.int(bits.length)) {
             throw "Attempt to get element out of bounds";
 		}
         #end

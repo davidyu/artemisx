@@ -46,7 +46,7 @@ class EntitySystem implements EntityObserver
 	private function end():Void { }
 	private function initialize():Void { }
 	
-	private inline function processEntities(entities:ImmutableBag<Entity>):Void { }
+	private inline function processEntities(entities:Bag<Entity>):Void { }
 	private inline function checkProcessing():Bool { return true; }
 	
 	private inline function onInserted(e:Entity):Void { }

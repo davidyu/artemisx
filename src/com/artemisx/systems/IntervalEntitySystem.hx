@@ -12,6 +12,7 @@ class IntervalEntitySystem extends EntitySystem
 	{
 		super(aspect);
 		this.interval = interval;
+		acc = 0;
 	}
 	
 	override private inline function checkProcessing()

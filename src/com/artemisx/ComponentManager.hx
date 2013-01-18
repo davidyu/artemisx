@@ -55,11 +55,11 @@ class ComponentManager extends Manager
 	private inline function getComponentsByType(type:ComponentType):Bag<Component>
 	{
 		var components = componentsByType.get(type.index);
-		if (components != null) {
+		if (components == null) {
 			components = new Bag();
 			componentsByType.set(type.index, components);
 		}
-		return null;
+		return components;
 	}
 	
 	private inline function getComponent(e:Entity, type:ComponentType)

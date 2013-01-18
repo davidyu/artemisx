@@ -26,7 +26,6 @@ private class ComponentMapperInitHelper
 		} catch (msg:String) {
 			trace("Error in CompError while setting component mappers: " + msg);
 		}
-      
     }
 }
 

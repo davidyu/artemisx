@@ -33,7 +33,7 @@ class EntitySystem implements EntityObserver
 		
     }
 	
-	public inline function process():Void
+	public function process():Void
 	{
 		if (checkProcessing()) {
 			begin();
@@ -46,8 +46,8 @@ class EntitySystem implements EntityObserver
 	private function end():Void { }
 	private function initialize():Void { }
 	
-	private inline function processEntities(entities:Bag<Entity>):Void { }
-	private inline function checkProcessing():Bool { return true; }
+	private function processEntities(entities:Bag<Entity>):Void { }
+	private function checkProcessing():Bool { return true; }
 	
 	private inline function onInserted(e:Entity):Void { }
 	private inline function onRemoved(e:Entity):Void { }
@@ -134,7 +134,7 @@ private class SystemIndexManager
 	{
 		var index:Null<Int> = indicies.get(untyped es);
 		
-		if (index != null) {
+		if (index == null) {
 			index = INDEX++;
 			indicies.set(untyped es, index);
 		}

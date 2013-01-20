@@ -4,31 +4,6 @@ import com.artemisx.utils.ClassHash;
 import com.artemisx.utils.Bag;
 import com.artemisx.utils.ImmutableBag;
 
-// TODO Test this thoroughly
-// takes each ComponentMapper field in the System and casts them into the correct Component.
-// caveat 1: use @Mapper(ComponentName) ComponentMapper annotation instead of @Mapper ComponentMapper<ComponentName>
-// caveat 2: also you must give the FULL class name (my.package.ComponentName instead of just ComponentName), this is a limitation of resolveClass
-private class ComponentMapperInitHelper
-{
-    public static function config(target:Dynamic, world:World)
-    {
-        try {
-            var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
-            
-            for (fieldName in Reflect.fields(annotations)) {
-                var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
-                
-                if (componentClassName != null) {
-                    var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
-                    Reflect.setField(target, fieldName, world.getMapper(componentType));
-                }
-            }
-        } catch (msg:String) {
-            trace("Error in CompError while setting component mappers: " + msg);
-        }
-    }
-}
-
 class World
 {
     @:isVar public var entityManager(default, null):EntityManager;
@@ -237,35 +212,11 @@ class World
 
     public inline function process():Void
     {
-        check(added,
-              function (observer:EntityObserver, e:Entity) : Void
-              {
-                  observer.onAdded(e);
-              });
-
-        check(changed,
-              function (observer:EntityObserver, e:Entity) : Void
-              {
-                  observer.onChanged(e);
-              });
-
-        check(disable,
-              function (observer:EntityObserver, e:Entity) : Void
-              {
-                  observer.onDisabled(e);
-              });
-
-        check(enable,
-              function (observer:EntityObserver, e:Entity) : Void
-              {
-                 observer.onEnabled(e);
-              });
-
-        check(deleted,
-              function (observer:EntityObserver, e:Entity) : Void
-              {
-                  observer.onDeleted(e);
-              });
+        check(added, fAdded);
+        check(changed, fChanged);
+        check(disable, fDisabled);
+        check(enable, fEnabled);
+        check(deleted, fDeleted);		  
 
         componentManager.clean();
 
@@ -276,9 +227,57 @@ class World
             }
         }
     }
+	
+	private static inline var fAdded = function (observer:EntityObserver, e:Entity) : Void {
+		observer.onAdded(e);
+	}
+	private static inline var fChanged = function (observer:EntityObserver, e:Entity) : Void {
+		observer.onChanged(e);
+	}
+	private static inline var fDisabled = function (observer:EntityObserver, e:Entity) : Void {
+		observer.onDisabled(e);
+	}
+	private static inline var fEnabled = function (observer:EntityObserver, e:Entity) : Void {
+		observer.onEnabled(e);
+	}
+	private static inline var fDeleted = function (observer:EntityObserver, e:Entity) : Void {
+		observer.onDeleted(e);
+	}
 
     public inline function getMapper<T:Component> (type:Class<T>) : ComponentMapper<T>
     {
         return ComponentMapper.getFor(type, this);
     }
+}
+
+// TODO Test this thoroughly
+// takes each ComponentMapper field in the System and casts them into the correct Component.
+// caveat 1: use @Mapper(ComponentName) ComponentMapper annotation instead of @Mapper ComponentMapper<ComponentName>
+// caveat 2: also you must give the FULL class name (my.package.ComponentName instead of just ComponentName), this is a limitation of resolveClass
+private class ComponentMapperInitHelper
+{
+    public static function config(target:Dynamic, world:World)
+    {
+        try {
+            var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
+            
+            for (fieldName in Reflect.fields(annotations)) {
+                var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
+                
+                if (componentClassName != null) {
+                    var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
+                    Reflect.setField(target, fieldName, world.getMapper(componentType));
+                }
+            }
+        } catch (msg:String) {
+            trace("Error in CompError while setting component mappers: " + msg);
+        }
+    }
+}
+
+private class Performer {
+	public function new() {}
+	public function perform(observer:EntityObserver, e:Entity) {
+		
+	}
 }

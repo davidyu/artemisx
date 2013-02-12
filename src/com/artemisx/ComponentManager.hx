@@ -30,9 +30,9 @@ class ComponentManager extends Manager
 		
 	}
 	
-	private inline function addComponent(e:Entity, type:ComponentType, component:Component)
+	private inline function addComponent(e:Entity, type:ComponentType, component:Component) : Void
 	{
-		componentsByType.ensureCapacity(type.getIndex());
+		componentsByType.ensureCapacity(type.index);
 		
 		var components:Bag<Component> = componentsByType.get(type.index);
 		if (components == null) {
@@ -62,13 +62,14 @@ class ComponentManager extends Manager
 		return components;
 	}
 	
-	private inline function getComponent(e:Entity, type:ComponentType)
+	private inline function getComponent(e:Entity, type:ComponentType):Component 
 	{
 		var components = componentsByType.get(type.index);
+		var cmp : Component = null;
 		if (components != null) {
-			return components.get(e.id);
+			cmp = components.get(e.id);
 		}
-		return null;
+		return cmp;
 	}
 	
 	public inline function getComponentsFor(e:Entity, fillBag:Bag<Component>):Bag<Component>
@@ -93,5 +94,5 @@ class ComponentManager extends Manager
 		}
 	}
 	
-	override public inline function onDeleted(e:Entity):Void { deleted.add(e); }
+	override public function onDeleted(e:Entity):Void { deleted.add(e); }
 }

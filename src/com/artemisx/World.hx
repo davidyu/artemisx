@@ -9,19 +9,7 @@ class World
     @:isVar public var entityManager(default, null):EntityManager;
     @:isVar public var componentManager(default, null):ComponentManager;
 
-    @:isVar public var delta (getDelta, setDelta):Float ;
-
-    private var added:Bag<Entity>;
-    private var changed:Bag<Entity>;
-    private var deleted:Bag<Entity>;
-    private var enable:Bag<Entity>;
-    private var disable:Bag<Entity>;
-
-    private var managers:ClassHash<Dynamic, Manager>;
-    private var managersBag:Bag<Manager>;
-
-    private var systems:ClassHash<Dynamic, EntitySystem>;
-    private var systemsBag:Bag<EntitySystem>;
+    @:isVar public var delta (get_delta, set_delta):Float ;
 
     public function new()
     {
@@ -86,7 +74,7 @@ class World
     {
         managers.set(Type.getClass(manager), manager);
         managersBag.add(manager);
-        manager.setWorld(this);
+        manager.world = this;
         return manager;
     }
 
@@ -96,31 +84,18 @@ class World
         managersBag.remove(manager);
     }
 
-    public inline function getDelta():Float
-    {
-        return delta;
-    }
-
-    public inline function setDelta(delta:Float):Float
-    {
-        this.delta = delta;
-        return delta;
-    }
-
     public inline function addEntity(e:Entity):Void
     {
         added.add(e);
     }
 
-    public inline function changedEntity(e:Entity):Void
-    {
-        changed.add(e);
-    }
-
-    public inline function deleteEntity(e:Entity):Void {
+    public inline function deleteEntity(e:Entity, ?flush:Bool=false):Void {
         if (!deleted.contains(e)) {
             deleted.add(e);
         }
+		if (flush) {
+			process();
+		}
     }
 
     //note: in the canonical implementation this is simply "enable"
@@ -128,33 +103,33 @@ class World
     {
         enable.add(e);
     }
+	
+	public inline function changedEntity(e:Entity):Void
+    {
+        changed.add(e);
+    }
 
     //note: in the canonical implementation this is simply "disable"
     public function disableEntity(e:Entity):Void
     {
         disable.add(e);
     }
-
+	
+	public inline function containsActiveEntity(e:Entity):Bool
+	{
+		return entityManager.entities.contains(e);
+	}
+	
     public inline function createEntity():Entity
     {
         return entityManager.createEntityInstance();
     }
 
-    public inline function getEntity(entityId:Int):Entity
-    {
-        return entityManager.getEntity(entityId);
-    }
-
-    public inline function getSystems():ImmutableBag<EntitySystem>
-    {
-        return systemsBag;
-    }
-
     // passive = true -> will not be processed by World
-    public inline function setSystem<T:EntitySystem> (system:T, ?passive : Bool = false) : T
+    public inline function setSystem<T:EntitySystem> (system:T, ?passive:Bool = false):T
     {
         system.world = this;
-        system.setPassive(passive);
+        system.passive = passive;
         systems.set(Type.getClass(system), system);
         systemsBag.add(system);
         return system;
@@ -165,26 +140,56 @@ class World
         systems.remove(Type.getClass(system));
         systemsBag.remove(system);
     }
-
-    // note to self: in the canonical implementations of notifySystems and notifyManagers, Ari used a strange
-    // loop condition. I've simplified it here. Hopefully I'm not shooting myself in the foot.
-    private inline function notifySystems(post: EntitySystem -> Entity -> Void, e:Entity):Void
+	
+	public inline function deleteSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
+	{
+		for (i in types) {
+			var sys = systems.get( i );
+			if ( sys != null ) {
+				systems.remove( i );
+				systemsBag.remove( sys );
+			}
+		}
+	}
+	
+	public inline function disableSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
+	{
+		for (i in types) {
+			var sys = systems.get(i);
+			if ( sys != null ) {
+				sys.passive = true;
+			}
+		}
+	}
+	
+	public inline function enableSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
+	{
+		for (i in types) {
+			var sys = systems.get(i);
+			if ( sys != null ) {
+				sys.passive = false;
+			}
+		}
+	}
+	
+	public inline function getEntity(entityId:Int):Entity
     {
-        for (i in 0...systemsBag.size) {
-            post(systemsBag.get(i), e);
-        }
+        return entityManager.getEntity(entityId);
     }
-
-    private inline function notifyManagers(post: Manager -> Entity -> Void, e:Entity):Void
+	
+	public inline function getMapper<T:Component> (type:Class<T>) : ComponentMapper<T>
     {
-        for(i in 0...managersBag.size) {
-            post(managersBag.get(i), e);
-        }
+        return ComponentMapper.getFor(type, this);
     }
-
+	
 	public inline function getSystem<T:EntitySystem> (type:Class<T>):T
     {
 		return cast(systems.get(type));
+    }
+	
+	public inline function getSystems():ImmutableBag<EntitySystem>
+    {
+        return systemsBag;
     }
 	
     public inline function getSystemSafe<T:EntitySystem> (type:Class<T>):T
@@ -197,20 +202,8 @@ class World
 		}
         return null;
     }
-
-    private function check(entities:Bag<Entity>, method:EntityObserver -> Entity -> Void):Void
-	{
-        if (!entities.isEmpty()) {
-            for (i in 0...entities.size) {
-                var e = entities.get(i);
-                notifyManagers(method, e);
-                notifySystems(method, e);
-            }
-            entities.clear();
-        }
-    }
-
-    public inline function process():Void
+	
+	public inline function process():Void
     {
         check(added, fAdded);
         check(changed, fChanged);
@@ -228,26 +221,73 @@ class World
         }
     }
 	
-	private static inline var fAdded = function (observer:EntityObserver, e:Entity) : Void {
+	// Privates 
+	private var added:Bag<Entity>;
+    private var changed:Bag<Entity>;
+    private var deleted:Bag<Entity>;
+    private var enable:Bag<Entity>;
+    private var disable:Bag<Entity>;
+
+    private var managers:ClassHash<Dynamic, Manager>;
+    private var managersBag:Bag<Manager>;
+
+    private var systems:ClassHash<Dynamic, EntitySystem>;
+    private var systemsBag:Bag<EntitySystem>;
+	
+	private inline function get_delta():Float
+    {
+        return delta;
+    }
+
+    private inline function set_delta(delta:Float):Float
+    {
+        this.delta = delta;
+        return delta;
+    }
+	
+    // note to self: in the canonical implementations of notifySystems and notifyManagers, Ari used a strange
+    // loop condition. I've simplified it here. Hopefully I'm not shooting myself in the foot.
+    private inline function notifySystems(post: EntitySystem -> Entity -> Void, e:Entity):Void
+    {
+        for (i in 0...systemsBag.size) {
+            post(systemsBag.get(i), e);
+        }
+    }
+
+    private inline function notifyManagers(post: Manager -> Entity -> Void, e:Entity):Void
+    {
+        for(i in 0...managersBag.size) {
+            post(managersBag.get(i), e);
+        }
+    }
+
+    private function check(entities:Bag<Entity>, method:EntityObserver -> Entity -> Void):Void
+	{
+        if (!entities.isEmpty()) {
+            for (i in 0...entities.size) {
+                var e = entities.get(i);
+                notifyManagers(method, e);
+                notifySystems(method, e);
+            }
+            entities.clear();
+        }
+    }
+	
+	private static var fAdded = function (observer:EntityObserver, e:Entity) : Void {
 		observer.onAdded(e);
 	}
-	private static inline var fChanged = function (observer:EntityObserver, e:Entity) : Void {
+	private static var fChanged = function (observer:EntityObserver, e:Entity) : Void {
 		observer.onChanged(e);
 	}
-	private static inline var fDisabled = function (observer:EntityObserver, e:Entity) : Void {
+	private static var fDisabled = function (observer:EntityObserver, e:Entity) : Void {
 		observer.onDisabled(e);
 	}
-	private static inline var fEnabled = function (observer:EntityObserver, e:Entity) : Void {
+	private static var fEnabled = function (observer:EntityObserver, e:Entity) : Void {
 		observer.onEnabled(e);
 	}
-	private static inline var fDeleted = function (observer:EntityObserver, e:Entity) : Void {
+	private static var fDeleted = function (observer:EntityObserver, e:Entity) : Void {
 		observer.onDeleted(e);
 	}
-
-    public inline function getMapper<T:Component> (type:Class<T>) : ComponentMapper<T>
-    {
-        return ComponentMapper.getFor(type, this);
-    }
 }
 
 // TODO Test this thoroughly

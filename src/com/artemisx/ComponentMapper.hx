@@ -11,7 +11,7 @@ class ComponentMapper<A:Component>
     private var classType:Class<A>;
     private var components:Bag<Component>;
 
-	public static function getFor<T:Component>(type:Class<T>, world:World)
+	public static function getFor<T:Component>(type:Class<T>, world:World):ComponentMapper<T>
 	{
 		return new ComponentMapper<T>(type, world);
 	}
@@ -28,10 +28,11 @@ class ComponentMapper<A:Component>
 
 	public inline function getSafe(e:Entity):A
 	{
+		var res : A = null;
 		if (components.isIndexWithinBounds(e.id)) {
-			return cast(components.get(e.id));
+			res = cast(components.get(e.id));
 		}
-		return null;
+		return res;
 	}
 
 	public inline function has(e:Entity) { return getSafe(e) != null; }

@@ -19,10 +19,10 @@ class EntityManager extends Manager {
     private var entities:Bag<Entity>;
     private var disabled:Bitset;
 
-    @:isVar public var activeEntityCount (getActiveEntityCount, null):Int;
-    @:isVar public var totalAdded (getTotalAdded, null):Int64;
-    @:isVar public var totalCreated (getTotalCreated, null):Int64;
-    @:isVar public var totalDeleted (getTotalDeleted, null):Int64;
+    @:isVar public var activeEntityCount (get_activeEntityCount, null):Int;
+    @:isVar public var totalAdded (get_totalAdded, null):Int64;
+    @:isVar public var totalCreated (get_totalCreated, null):Int64;
+    @:isVar public var totalDeleted (get_totalDeleted, null):Int64;
 
     private var identifierPool:IdentifierPool;
 
@@ -76,17 +76,17 @@ class EntityManager extends Manager {
     public inline function isEnabled(entityId:Int):Bool { return !disabled.get(entityId); }
 
     // Get how many entities are activeEntityCount in this world.
-    public function getActiveEntityCount():Int { return activeEntityCount; }
+    public function get_activeEntityCount():Int { return activeEntityCount; }
 
     // Get how many entities have been totalCreated in the world since start.
     // totalCreated entities >= totalAdded entities, since a totalCreated entity is not always totalAdded
-    public function getTotalCreated():Int64 { return totalCreated; }
+    public function get_totalCreated():Int64 { return totalCreated; }
 
     // Get how many entities have been totalAdded to the world since start.
-    public function getTotalAdded():Int64 { return totalAdded; }
+    public function get_totalAdded():Int64 { return totalAdded; }
 
     // Get how many entities have been totalDeleted from the world since start.
-    public function getTotalDeleted():Int64 { return totalDeleted; }
+    public function get_totalDeleted():Int64 { return totalDeleted; }
 
     private inline function getEntity(entityId:Int):Entity 
 	{
@@ -111,13 +111,20 @@ private class IdentifierPool
         nextAvailableId = 0;
     }
 
-    public inline function checkout() 
+    public inline function checkout() : Int
 	{
+		var id : Int;
         if (ids.size > 0) {
-            return ids.removeLast();
-        }
-        return nextAvailableId++;
+            id = ids.removeLast();
+        } else {
+			id = nextAvailableId++;
+		}
+        return id;
     }
 
-    public inline function checkin(id:Int) { ids.add(id); }
+    public inline function checkin( id : Int ) : Void { 
+		if ( !ids.contains( id ) ) {
+			ids.add( id ); 
+		}
+	}
 }

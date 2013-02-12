@@ -11,9 +11,9 @@ class IntervalEntityProcessingSystem extends IntervalEntitySystem
 		super(aspect, interval);
 	}
 	
-	private inline function processEntity(e:Entity) { }
+	private function processEntity(e:Entity) { }
 	
-	override private inline function processEntities(entities:ImmutableBag<Entity>)
+	override private function processEntities(entities:ImmutableBag<Entity>)
 	{
 		for (i in 0...entities.size) {
 			processEntity(entities.get(i));

@@ -39,12 +39,13 @@ class Bitset
 	
 	public inline function intersects(set:Bitset) 
 	{
+		var res = false;
 		for (i in 0...Std.int(Math.min(bits.length, set.wordsInUse))) {
 			if ((bits[i] & set.bits[i]) != 0) {
-				return true;
+				res = true;
 			}
 		}
-		return false;
+		return res;
 	}
 	
 	public inline function nextClearBit(fromIndex:Int)

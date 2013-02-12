@@ -11,13 +11,13 @@ package com.artemisx;
 @:allow(com.artemisx)
 class Manager implements EntityObserver 
 {
-    @:isVar private var world (getWorld, setWorld):World;
+    @:isVar private var world (get_world, set_world):World;
 
     private function initialize():Void { }
 	
-	private function getWorld():World { return world; }
+	private function get_world():World { return world; }
 	
-    private function setWorld(world:World):World 
+    private function set_world(world:World):World 
 	{
         this.world = world;
         return world;

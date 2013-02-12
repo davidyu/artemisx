@@ -12,7 +12,7 @@ class EntityProcessingSystem extends EntitySystem
 		super(aspect);
 	}
 	
-	private inline function processEntity(e:Entity):Void { }
+	private function processEntity(e:Entity):Void { }
 	
 	override private function processEntities(entities:ImmutableBag<Entity>)
 	{
@@ -21,6 +21,6 @@ class EntityProcessingSystem extends EntitySystem
 		}
 	}
 	
-	override private inline function checkProcessing() { return true; }
+	override private function checkProcessing() { return true; }
 	
 }

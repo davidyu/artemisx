@@ -17,7 +17,7 @@ class IntervalEntitySystem extends EntitySystem
 	
 	override private inline function checkProcessing()
 	{
-		acc += world.getDelta();
+		acc += world.delta;
 		if (acc >= interval) {
 			acc -= interval;
 			return true;

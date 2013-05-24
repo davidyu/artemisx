@@ -12,9 +12,11 @@ typedef INT_TYPE = #if flash9 UInt #else Int #end
 // jdk/openjdk/6-b14/java/util/BitSet.java#BitSet.nextSetBit%28int%29
 class Bitset
 {   
-    private static inline var ADDRESS_BITS_PER_WORD:Int = 0x5;
+    private static inline var ADDRESS_BITS_PER_WORD:Int = 6;
 	private static inline var BITS_PER_WORD :Int = 1 << ADDRESS_BITS_PER_WORD;
 	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 5 bits used to shift
+	
+	private static inline var WORD_MASK : Int = 0xffffffff;
 
     private var bits:TArray<Int>;
 	public var wordsInUse(default, null):Int;
@@ -51,7 +53,7 @@ class Bitset
 	public inline function nextClearBit(fromIndex:Int)
 	{
 		var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
-		var chunk = ~bits[wordIndex] & (BIT_INDEX_MASK << fromIndex);
+		var chunk = ~bits[wordIndex] & (WORD_MASK << fromIndex);
 		var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
 		
 		while (true) {
@@ -68,7 +70,7 @@ class Bitset
 	public function nextSetBit(fromIndex:Int)
 	{
 		var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
-		var chunk = bits[wordIndex] & (BIT_INDEX_MASK << fromIndex);
+		var chunk = bits[wordIndex] & (WORD_MASK << fromIndex);
 		var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
 		
 		while (true) {
@@ -137,7 +139,7 @@ class Bitset
 		wordsInUse = i;
 	}
 
-    public function toString():Void { trace(bits); }
+    public function toString(): String { return bits.toString(); }
 	
 	// Find the number of zeroes after the lowest order one bit (rightmost)
 	// e.g. for 000100, returns 2... or should

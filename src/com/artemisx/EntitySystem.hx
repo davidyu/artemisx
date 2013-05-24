@@ -78,7 +78,6 @@ class EntitySystem implements EntityObserver
 		if (!oneSet.isEmpty()) {
 			interested = oneSet.intersects(componentBits);
 		}
-		
 		if (interested && !contains) {
 			insertToSystem(e);
 		} else if (!interested && contains) {
@@ -124,7 +123,7 @@ class EntitySystem implements EntityObserver
 private class SystemIndexManager
 {
 	private static var INDEX:Int = 0;
-	private static var indicies:ClassHash<EntitySystem, Null<Int>> = new ClassHash();
+	private static var indicies:haxe.ds.ObjectMap<Class<EntitySystem>, Null<Int>> = new haxe.ds.ObjectMap();
 	
 	public static function getIndexFor<T:EntitySystem>(es:Class<T>):Int
 	{

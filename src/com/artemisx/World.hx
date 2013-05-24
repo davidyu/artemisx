@@ -16,7 +16,7 @@ class World
         managers = new ClassHash<Manager, Manager>();
         managersBag = new Bag<Manager>();
 
-        systems = new ClassHash<Dynamic, EntitySystem>();
+        systems = new ClassHash<EntitySystem, EntitySystem>();
         systemsBag = new Bag<EntitySystem>();
 
         added = new Bag<Entity>();
@@ -97,6 +97,17 @@ class World
 			process();
 		}
     }
+	
+	public function deleteEntities():Void {
+		deleted.clear();
+		if ( !entityManager.entities.isEmpty() ) {
+			for ( i in 0...entityManager.entities.size ) {
+				if ( entityManager.entities.get( i ) != null ) {
+					deleted.add( entityManager.entities.get( i ) );
+				}
+			}
+		}
+	}
 
     //note: in the canonical implementation this is simply "enable"
     public inline function enableEntity(e:Entity):Void
@@ -122,7 +133,8 @@ class World
 	
     public inline function createEntity():Entity
     {
-        return entityManager.createEntityInstance();
+		var e = entityManager.createEntityInstance();
+        return e;
     }
 
     // passive = true -> will not be processed by World

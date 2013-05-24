@@ -15,7 +15,7 @@ class IntervalEntitySystem extends EntitySystem
 		acc = 0;
 	}
 	
-	override private inline function checkProcessing()
+	override private function checkProcessing()
 	{
 		acc += world.delta;
 		if (acc >= interval) {

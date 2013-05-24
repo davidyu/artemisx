@@ -67,7 +67,7 @@ class Entity
 	}
 	
 	// Function added for debugging
-	public function listComponents() : Void {
+	public function listComponents() : String {
 		var i = componentBits.nextSetBit( 0 );
 		var str = "[ id:" + id + ">" ;
 		
@@ -76,7 +76,7 @@ class Entity
 			i = componentBits.nextSetBit( i+1 );
 		}
 		str += " ]";
-		trace( str );
+		return str;
 	}
 	
 	public function getWorld() { return world; }

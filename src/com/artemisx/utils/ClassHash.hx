@@ -1,4 +1,5 @@
 package com.artemisx.utils;
+import haxe.ds.StringMap;
 
 /*
  * Wrapper for a Hash to allow Class types to be used as keys 
@@ -8,11 +9,11 @@ using Lambda;
 
 class ClassHash<K, V>
 {
-	private var map:Hash<V>;
+	private var map:haxe.ds.StringMap<V>;
 	
 	public function new():Void
 	{
-		map = new Hash();
+		map = new StringMap();
 	}
 	
 	public inline function set(key:Class<K>, value:V):Void

@@ -34,16 +34,18 @@ class Bag<E> implements ImmutableBag<E>
     public inline function remove(e:E):E
     {
 		var res = e;
+
         for (index in 0...size) {
             var e2:E = data[index];
             if (e2 == e)
             {
                 data[index] = data[--size];
                 data[size] = null;
-                res = e;
+				res = e;
+                break;
             }
         }
-        return res;
+		return res;
     }
 	
 	public function removeLast():E

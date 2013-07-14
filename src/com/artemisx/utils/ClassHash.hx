@@ -1,4 +1,5 @@
 package com.artemisx.utils;
+import haxe.ds.StringMap;
 
 /*
  * Wrapper for a Hash to allow Class types to be used as keys 
@@ -6,31 +7,31 @@ package com.artemisx.utils;
 using Type;
 using Lambda;
 
-class ClassHash<K, V>
+class ClassHash<V>
 {
-	private var map:Hash<V>;
+	private var map:haxe.ds.StringMap<V>;
 	
 	public function new():Void
 	{
-		map = new Hash();
+		map = new StringMap();
 	}
 	
-	public inline function set(key:Class<K>, value:V):Void
+	public inline function set(key:Class<Dynamic>, value:V):Void
 	{
 		map.set(key.getClassName(), value);
 	}
 
-	public inline function get(key:Class<K>):Null<V>
+	public inline function get(key:Class<Dynamic>):Null<V>
 	{
 		return map.get(key.getClassName());
 	}
 
-	public inline function exists(key:Class<K>):Bool
+	public inline function exists(key:Class<Dynamic>):Bool
 	{
 		return map.exists(key.getClassName());
 	}
 
-	public inline function remove(key:Class<K>):Bool
+	public inline function remove(key:Class<Dynamic>):Bool
 	{
 		return map.remove(key.getClassName());
 	}

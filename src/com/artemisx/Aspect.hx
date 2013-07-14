@@ -18,9 +18,9 @@ import StdTypes;
 @:allow(com.artemisx)
 class Aspect
 {
-    @:isVar private var allSet (getAllSet, null):Bitset;
-    @:isVar private var exclusionSet (getExclusionSet, null):Bitset;
-    @:isVar private var oneSet (getOneSet, null):Bitset;
+    @:isVar private var allSet (get_allSet, null):Bitset;
+    @:isVar private var exclusionSet (get_exclusionSet, null):Bitset;
+    @:isVar private var oneSet (get_oneSet, null):Bitset;
 
     private function new()
     {
@@ -29,9 +29,9 @@ class Aspect
         this.oneSet = new Bitset();
     }
 
-    private inline function getAllSet():Bitset { return allSet; }
-    private inline function getExclusionSet():Bitset { return exclusionSet; }
-    private inline function getOneSet():Bitset { return oneSet; }
+    private inline function get_allSet():Bitset { return allSet; }
+    private inline function get_exclusionSet():Bitset { return exclusionSet; }
+    private inline function get_oneSet():Bitset { return oneSet; }
 
     //Small gotcha: in contrast with Ari's cannonical implementation, the types
     //parameter is an iterable rather than zero-or-more actual parameters

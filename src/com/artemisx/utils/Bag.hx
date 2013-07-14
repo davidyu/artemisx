@@ -30,38 +30,44 @@ class Bag<E> implements ImmutableBag<E>
     }
 
     // gotcha: in the canonical implementation this overloads remove; We have removeAt for index remove
-    public inline function remove(e:E):Bool
+	// returns input value even if it is not found in this bag...
+    public inline function remove(e:E):E
     {
+		var res = e;
+
         for (index in 0...size) {
             var e2:E = data[index];
             if (e2 == e)
             {
                 data[index] = data[--size];
                 data[size] = null;
-                return true;
+				res = e;
+                break;
             }
         }
-        return false;
+		return res;
     }
 	
-	public inline function removeLast():E
+	public function removeLast():E
 	{
 		if (size > 0) {
 			var e:E = data[--size];
 			data[size] = null;
 			return e;
 		}
-		return null;
+		throw "Can't remove last from empty bag";
 	}
 	
 	public inline function contains(e:E):Bool
 	{
+		var res = false;
 		for (i in 0...size) {
 			if (e == data[i]) {
-				return true;
+				res = true;
+				break;
 			}
 		}
-		return false;
+		return res;
 	}
 	
 	public inline function removeAllIn(bag:ImmutableBag<E>) 
@@ -94,7 +100,7 @@ class Bag<E> implements ImmutableBag<E>
 	public inline function isEmpty():Bool { return size == 0; }
 
 	
-	public inline function add(e:E):Void
+	public function add(e:E):Void
 	{
 		if (size == Std.int(data.length)) {
 			grow(size << 1);

@@ -8,9 +8,9 @@ import com.artemisx.utils.ImmutableBag;
 @:allow(com.artemisx)
 class EntitySystem implements EntityObserver
 {
-    @:isVar public 	var actives (getActives, null): Bag<Entity>;
-	@:isVar public 	var world (null, setWorld):World;
-	@:isVar public 	var passive (isPassive, setPassive):Bool;
+    @:isVar public 	var actives (get_actives, null): Bag<Entity>;
+	@:isVar public 	var world (null, set_world):World;
+	@:isVar public 	var passive (get_passive, set_passive):Bool;
 	
 	private var aspect:Aspect;
 	private var dummy:Bool; // Variable for performance
@@ -33,7 +33,7 @@ class EntitySystem implements EntityObserver
 		
     }
 	
-	public inline function process():Void
+	public function process():Void
 	{
 		if (checkProcessing()) {
 			begin();
@@ -46,13 +46,13 @@ class EntitySystem implements EntityObserver
 	private function end():Void { }
 	private function initialize():Void { }
 	
-	private inline function processEntities(entities:ImmutableBag<Entity>):Void { }
-	private inline function checkProcessing():Bool { return true; }
+	private function processEntities(entities:Bag<Entity>):Void { }
+	private function checkProcessing():Bool { return true; }
 	
-	private inline function onInserted(e:Entity):Void { }
-	private inline function onRemoved(e:Entity):Void { }
+	private function onInserted(e:Entity):Void { }
+	private function onRemoved(e:Entity):Void { }
 	
-	private inline function check(e:Entity):Void
+	private function check(e:Entity):Void
 	{
 		if (dummy) {
 			return;
@@ -78,7 +78,6 @@ class EntitySystem implements EntityObserver
 		if (!oneSet.isEmpty()) {
 			interested = oneSet.intersects(componentBits);
 		}
-		
 		if (interested && !contains) {
 			insertToSystem(e);
 		} else if (!interested && contains) {
@@ -86,41 +85,37 @@ class EntitySystem implements EntityObserver
 		}
 	}
 	
-	private inline function insertToSystem(e:Entity):Void
+	private function insertToSystem(e:Entity):Void
 	{
 		actives.add(e);
 		e.systemBits.set(systemIndex);
 		onInserted(e);
 	}
 	
-	private inline function removeFromSystem(e:Entity):Void
+	private function removeFromSystem(e:Entity):Void
 	{
 		actives.remove(e);
 		e.systemBits.unset(systemIndex);
 		onRemoved(e);
 	}
 	
-	public inline function onAdded(e:Entity):Void 	 { check(e); }
-    public inline function onChanged(e:Entity):Void { check(e); }
-    public inline function onDeleted(e:Entity):Void
+	public function onAdded(e:Entity):Void 	 { check(e); }
+    public function onChanged(e:Entity):Void { check(e); }
+    public function onDeleted(e:Entity):Void
     {
 		if (e.systemBits.get(systemIndex)) {
 			removeFromSystem(e);
 		}
     }
 
-	public inline function onEnabled(e:Entity):Void { check(e); }
-    public inline function onDisabled(e:Entity):Void
-    {
-		if (e.systemBits.get(systemIndex)) {
-			removeFromSystem(e);
-		}
-    }
+	public function onEnabled(e:Entity):Void { check(e); }
+    public function onDisabled(e:Entity):Void {}
 	
-	public inline function isPassive():Bool 	{ return passive;  } 
-	public inline function setPassive(v:Bool) 	{ passive = v; return v; }
-	public inline function getActives() 		{ return actives; }
-	public inline function setWorld(v:World)	{ world = v; return v;  }
+	public inline function isPassive():Bool 	{ return passive;  }
+	public inline function get_passive():Bool 	{ return passive; }
+	public inline function set_passive(v:Bool) 	{ passive = v; return v; }
+	public inline function get_actives() 		{ return actives; }
+	public inline function set_world(v:World)	{ world = v; return v;  }
 	
 
 }
@@ -128,13 +123,13 @@ class EntitySystem implements EntityObserver
 private class SystemIndexManager
 {
 	private static var INDEX:Int = 0;
-	private static var indicies:ClassHash<EntitySystem, Null<Int>> = new ClassHash();
+	private static var indicies:ClassHash<Int> = new ClassHash<Int>();
 	
 	public static function getIndexFor<T:EntitySystem>(es:Class<T>):Int
 	{
 		var index:Null<Int> = indicies.get(untyped es);
 		
-		if (index != null) {
+		if (index == null) {
 			index = INDEX++;
 			indicies.set(untyped es, index);
 		}

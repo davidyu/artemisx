@@ -123,7 +123,7 @@ class EntitySystem implements EntityObserver
 private class SystemIndexManager
 {
 	private static var INDEX:Int = 0;
-	private static var indicies:haxe.ds.ObjectMap<Class<EntitySystem>, Null<Int>> = new haxe.ds.ObjectMap();
+	private static var indicies:ClassHash<Int> = new ClassHash<Int>();
 	
 	public static function getIndexFor<T:EntitySystem>(es:Class<T>):Int
 	{

@@ -13,10 +13,10 @@ class World
 
     public function new()
     {
-        managers = new ClassHash<Manager, Manager>();
+        managers = new ClassHash<Manager>();
         managersBag = new Bag<Manager>();
 
-        systems = new ClassHash<EntitySystem, EntitySystem>();
+        systems = new ClassHash<EntitySystem>();
         systemsBag = new Bag<EntitySystem>();
 
         added = new Bag<Entity>();
@@ -240,10 +240,10 @@ class World
     private var enable:Bag<Entity>;
     private var disable:Bag<Entity>;
 
-    private var managers:ClassHash<Dynamic, Manager>;
+    private var managers:ClassHash<Manager>;
     private var managersBag:Bag<Manager>;
 
-    private var systems:ClassHash<Dynamic, EntitySystem>;
+    private var systems:ClassHash<EntitySystem>;
     private var systemsBag:Bag<EntitySystem>;
 	
 	private inline function get_delta():Float

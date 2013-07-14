@@ -41,7 +41,7 @@ class ComponentType
 		trace( str );
 	}
 	
-	private static var componentTypes:haxe.ds.ObjectMap<Class<Component>, ComponentType> = new haxe.ds.ObjectMap();
+	private static var componentTypes:ClassHash<ComponentType> = new ClassHash<ComponentType>();
 	private static var componentIndicies:Array<ComponentType> = new Array();
 	private static var INDEX:Int = 0;
 	

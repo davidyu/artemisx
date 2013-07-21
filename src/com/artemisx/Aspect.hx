@@ -3,6 +3,8 @@ package com.artemisx;
 import com.artemisx.utils.Bitset;
 import StdTypes;
 
+using Lambda;
+
 /**
  * Used by Systems to match against groups of entities.
  * This may be conceptually difficult to understand, so read
@@ -78,6 +80,51 @@ class Aspect
         aspect.one(types);
         return aspect;
     }
+	
+	public static function matches( signature : Aspect, componentBits : Bitset ) : Bool {
+		var interested = true;
+		var i = signature.allSet.nextSetBit( 0 );
+		
+		// If all of types in signature allset are in componentBits
+		if ( !signature.allSet.isEmpty() ) {
+			while ( i >= 0 ) {
+				if ( !componentBits.get( i ) ) {
+					interested = false;
+					break;
+				}
+				i = signature.allSet.nextSetBit( i + 1 );
+			}
+		}
+		
+		// AND If at least one of the types of signature oneset are in componentBits
+		if ( interested && !signature.oneSet.isEmpty() ) {
+			interested = false;
+			i = signature.oneSet.nextSetBit( 0 );
+			
+			while ( i >= 0 ) {
+				if ( componentBits.get( i ) ) {
+					interested = true;
+					break;
+				}
+				i = signature.oneSet.nextSetBit( i + 1 );
+			}
+		}
+		
+		// AND If none of the types of signature exclusionset are in componentBits
+		if ( interested && !signature.exclusionSet.isEmpty() ) {
+			i = signature.exclusionSet.nextSetBit( 0 );
+			
+			while ( i >= 0 ) {
+				if ( componentBits.get( i ) ) {
+					interested = false;
+					break;
+				}
+				i = signature.exclusionSet.nextSetBit( i + 1 );
+			}
+		}
+		
+		return interested;
+	}
 
     public static inline function getEmpty():Aspect { return new Aspect(); }
 

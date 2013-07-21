@@ -65,9 +65,9 @@ class ComponentType
 	
 	public inline function get_index():Int { return index; }
 	
-	public function toString() { return "(" + index + ": " + classFormatter( type ) + ")" ; }
+	public function toString() { return "(" + index + ": " + className( type ) + ")" ; }
 	
-	private static function classFormatter( clazz : Class<Component> ) : String {
+	private static function className( clazz : Class<Component> ) : String {
 		var classname = Type.getClassName( clazz );
 		var lastPeriod = classname.lastIndexOf( "." ) + 1;
 		return classname.substring( lastPeriod );

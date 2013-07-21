@@ -72,7 +72,7 @@ class Entity
 		var str = "[ id:" + id + ">" ;
 		
 		while ( i != -1 ) {
-			str += " " + ComponentType.classFormatter( ComponentType.getTypeFromIndex( i ) );
+			str += " " + ComponentType.className( ComponentType.getTypeFromIndex( i ) );
 			i = componentBits.nextSetBit( i+1 );
 		}
 		str += " ]";

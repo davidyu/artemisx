@@ -14,7 +14,7 @@ class Manager implements EntityObserver
     @:isVar private var world (default, default):World;
 
     private function initialize():Void { }
-	
+
     public function onAdded(e:Entity) {}
 
     public function onChanged(e:Entity) {}

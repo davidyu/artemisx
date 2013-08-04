@@ -20,10 +20,18 @@ class Bitset
 
     private var bits:TArray<Int>;
 	public var wordsInUse(default, null):Int;
+    public var length( get_length, null):Int;
 
     public function new(?numBits:Int=1) {
         bits = new TArray();
         ensureCapacity(numBits);
+    }
+    
+    public function copy() {
+        var nbits = new Bitset();
+        nbits.bits = bits.concat();
+        nbits.recalulateWordsInUse();
+        return nbits;
     }
 
     public inline function ensureCapacity(bitIndex:Int):Void {
@@ -39,7 +47,7 @@ class Bitset
 		
     }
 	
-	public inline function intersects(set:Bitset) 
+	public inline function intersects(set:Bitset):Bool
 	{
 		var res = false;
 		for (i in 0...Std.int(Math.min(bits.length, set.wordsInUse))) {
@@ -50,7 +58,7 @@ class Bitset
 		return res;
 	}
 	
-	public inline function nextClearBit(fromIndex:Int)
+	public inline function nextClearBit(fromIndex:Int):Int
 	{
 		var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
 		var chunk = ~bits[wordIndex] & (WORD_MASK << fromIndex);
@@ -125,6 +133,10 @@ class Bitset
 		}
 		return true;
 	}
+    
+    public function get_length():Int {
+        return bits.length * BITS_PER_WORD;
+    }
 	
 	private function recalulateWordsInUse()
 	{
@@ -138,6 +150,22 @@ class Bitset
 		}
 		wordsInUse = i;
 	}
+    
+    public function equals( v : Bitset ) : Bool {
+        var res = true;
+        
+        if ( v.bits.length != bits.length ) {
+            res = false;
+        } else {
+            for ( i in 0...bits.length ) {
+                if ( bits[i] != v.bits[i] ) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
 
     public function toString(): String { return bits.toString(); }
 	

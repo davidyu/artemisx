@@ -215,7 +215,7 @@ class World
         return null;
     }
     
-    public inline function process():Void
+    public function process():Void
     {
         check(added, fAdded);
         check(changed, fChanged);
@@ -276,10 +276,12 @@ class World
     private function check(entities:Bag<Entity>, method:EntityObserver -> Entity -> Void):Void
     {
         if (!entities.isEmpty()) {
-            for (i in 0...entities.size) {
+            var i = 0;
+            while (i < entities.size) {
                 var e = entities.get(i);
                 notifyManagers(method, e);
                 notifySystems(method, e);
+                ++i;
             }
             entities.clear();
         }

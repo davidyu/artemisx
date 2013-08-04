@@ -36,9 +36,9 @@ class TagManager extends Manager
 		entitiesByTag.remove(tag);
 	}
 	
-	public inline function isRegistered(tag:String):Bool { return entitiesByTag.exists(tag); } // Different from original maybe?
+	public function isRegistered(tag:String):Bool { return entitiesByTag.exists(tag); } // Different from original maybe?
 	
-	public inline function getEntity(tag:String):Entity { return entitiesByTag.get(tag); }
+	public function getEntity(tag:String):Entity { return entitiesByTag.get(tag); }
 	
 	public inline function getRegisteredTags():Iterator<String> { return tagsByEntity.iterator(); }
 	

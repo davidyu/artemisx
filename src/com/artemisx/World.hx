@@ -94,7 +94,7 @@ class World
             deleted.add(e);
         }
         if (flush) {
-            process();
+            processBatch();
         }
     }
     
@@ -115,9 +115,12 @@ class World
         enable.add(e);
     }
     
-    public inline function changedEntity(e:Entity):Void
+    public inline function changedEntity(e:Entity, ?flush:Bool=false):Void
     {
         changed.add(e);
+        if ( flush ) {
+            processBatch();
+        }
     }
 
     //note: in the canonical implementation this is simply "disable"
@@ -215,8 +218,7 @@ class World
         return null;
     }
     
-    public function process():Void
-    {
+    public inline function processBatch():Void {
         check(added, fAdded);
         check(changed, fChanged);
         check(disable, fDisabled);
@@ -224,6 +226,11 @@ class World
         check(deleted, fDeleted);          
 
         componentManager.clean();
+    }
+    
+    public function process():Void
+    {
+        processBatch();
 
         for (i in 0...systemsBag.size) {
             var system = systemsBag.get(i);

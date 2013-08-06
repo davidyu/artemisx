@@ -53,8 +53,14 @@ class Entity
 		componentManager.addComponent(this, type, component);
 		return this;
 	}
+    
+    public inline function removeComponent(c:Class<Component>):Entity
+    {
+        removeComponentOfType(ComponentType.getTypeFor(c));
+        return this;
+    }
 
-    public inline function removeComponent(component:Component):Entity 
+    public inline function removeComponentInstance(component:Component):Entity 
 	{
         removeComponentOfType(ComponentType.getTypeFor(Type.getClass(component)));
         return this;
@@ -63,6 +69,7 @@ class Entity
 	public inline function removeComponentOfType(type:ComponentType):Entity
 	{
 		componentManager.removeComponent(this, type);
+        world.changedEntity( this, true );
 		return this;
 	}
 	

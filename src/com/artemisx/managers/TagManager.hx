@@ -44,7 +44,7 @@ class TagManager extends Manager
 	
 	override private function initialize():Void { }
 	
-	override public inline function onDeleted(e:Entity)
+	override public function onDeleted(e:Entity)
 	{
 		var removedTag:String = tagsByEntity.get(e.id);
 		if (removedTag != null) {

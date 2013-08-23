@@ -69,7 +69,7 @@ class Entity
 	public inline function removeComponentOfType(type:ComponentType):Entity
 	{
 		componentManager.removeComponent(this, type);
-        world.changedEntity( this, true );
+		world.changedEntity( this, true );
 		return this;
 	}
 	
@@ -84,6 +84,10 @@ class Entity
 		}
 		str += " ]";
 		return str;
+	}
+	
+	public function toString() : String {
+		return listComponents();
 	}
 	
 	public function getWorld() { return world; }

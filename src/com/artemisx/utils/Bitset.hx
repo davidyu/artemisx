@@ -29,7 +29,7 @@ class Bitset
     
     public function copy() {
         var nbits = new Bitset();
-        nbits.bits = bits.concat();
+        nbits.bits = bits.copy();
         nbits.recalulateWordsInUse();
         return nbits;
     }

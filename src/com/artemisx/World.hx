@@ -9,7 +9,7 @@ class World
     @:isVar public var entityManager(default, null):EntityManager;
     @:isVar public var componentManager(default, null):ComponentManager;
 
-    @:isVar public var delta (get_delta, set_delta):Float ;
+    @:isVar public var delta (get_delta, set_delta): Null<Float> ;
 
     public function new()
     {

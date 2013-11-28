@@ -8,7 +8,7 @@ import com.artemisx.utils.UUID;
  *
  *  The entity class.
  *  originally written by Arni Arent
- *  ported to HaXe by Lewen Yu (AND HARRY)
+ *  ported to HaXe by Team Yu
  *
  */
 
@@ -84,7 +84,22 @@ class Entity
 		}
 		str += " ]";
 		return str;
-	}
+    }
+
+#if debug
+    // Also for debugging; it dumps the components attached to this entity so you can examine it
+    public function dumpComponents() : Array<Component> {
+        var i = componentBits.nextSetBit( 0 );
+        var list = new Array<Component>();
+
+        while ( i != -1 ) {
+            list.push( getComponentOfType( ComponentType.getTypeFor( ComponentType.getTypeFromIndex( i ) ) ) );
+            i = componentBits.nextSetBit( i+1 );
+        }
+
+        return list;
+    }
+#end
 	
 	public function toString() : String {
 		return listComponents();

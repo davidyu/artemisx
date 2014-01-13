@@ -3,5 +3,8 @@ bin
 .swp
 .swo
 
+# haxe tags
+tags
+
 # stupid mac finder files
 .DS_STORE

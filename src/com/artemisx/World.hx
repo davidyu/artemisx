@@ -4,6 +4,14 @@ import com.artemisx.utils.ClassHash;
 import com.artemisx.utils.Bag;
 import com.artemisx.utils.ImmutableBag;
 
+/**
+ *
+ * The World class.
+ *  originally written by Arni Arent
+ *  ported to HaXe by Team Yu
+ *
+ */
+
 class World
 {
     @:isVar public var entityManager(default, null):EntityManager;
@@ -58,18 +66,18 @@ class World
     {
         return cast(managers.get(managerType));
     }
-    
+
     public function getManagerSafe<M:Manager> (managerType:Class<M>) : M
     {
         var man:M;
-        
+
         if (Std.is(managers.get(managerType), managerType)) {
             man = cast managers.get(managerType);
             return man;
         }
         return null;
     }
-    
+
     public inline function setManager<M:Manager>(manager:M):M
     {
         managers.set(Type.getClass(manager), manager);
@@ -97,7 +105,7 @@ class World
             processBatch();
         }
     }
-    
+
     public function deleteEntities():Void {
         deleted.clear();
         if ( !entityManager.entities.isEmpty() ) {
@@ -114,7 +122,7 @@ class World
     {
         enable.add(e);
     }
-    
+
     public inline function changedEntity(e:Entity, ?flush:Bool=false):Void
     {
         changed.add(e);
@@ -128,12 +136,12 @@ class World
     {
         disable.add(e);
     }
-    
+
     public inline function containsActiveEntity(e:Entity):Bool
     {
         return entityManager.entities.contains(e);
     }
-    
+
     public inline function createEntity():Entity
     {
         var e = entityManager.createEntityInstance();
@@ -155,7 +163,7 @@ class World
         systems.remove(Type.getClass(system));
         systemsBag.remove(system);
     }
-    
+
     public inline function deleteSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
     {
         for (i in types) {
@@ -166,7 +174,7 @@ class World
             }
         }
     }
-    
+
     public inline function disableSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
     {
         for (i in types) {
@@ -176,7 +184,7 @@ class World
             }
         }
     }
-    
+
     public inline function enableSystemsOfTypes(types:Array<Class<EntitySystem>>):Void
     {
         for (i in types) {
@@ -186,38 +194,38 @@ class World
             }
         }
     }
-    
+
     public inline function getEntity(entityId:Int):Entity
     {
         return entityManager.getEntity(entityId);
     }
-    
+
     public inline function getMapper<T:Component> (type:Class<T>) : ComponentMapper<T>
     {
         return ComponentMapper.getFor(type, this);
     }
-    
+
     public inline function getSystem<T:EntitySystem> (type:Class<T>):T
     {
         return cast(systems.get(type));
     }
-    
+
     public inline function getSystems():ImmutableBag<EntitySystem>
     {
         return systemsBag;
     }
-    
+
     public inline function getSystemSafe<T:EntitySystem> (type:Class<T>):T
     {
         var sys:T;
-        
+
         if (Std.is(systems.get(type), type)) {
             sys = cast systems.get(type);
             return sys;
         }
         return null;
     }
-    
+
     public inline function processBatch():Void {
         check(added, fAdded);
         check(changed, fChanged);
@@ -227,7 +235,7 @@ class World
 
         componentManager.clean();
     }
-    
+
     public function process():Void
     {
         processBatch();
@@ -239,7 +247,7 @@ class World
             }
         }
     }
-    
+
     // Privates 
     private var added:Bag<Entity>;
     private var changed:Bag<Entity>;
@@ -252,7 +260,7 @@ class World
 
     private var systems:ClassHash<EntitySystem>;
     private var systemsBag:Bag<EntitySystem>;
-    
+
     private inline function get_delta():Float
     {
         return delta;
@@ -263,7 +271,7 @@ class World
         this.delta = delta;
         return delta;
     }
-    
+
     // note to self: in the canonical implementations of notifySystems and notifyManagers, Ari used a strange
     // loop condition. I've simplified it here. Hopefully I'm not shooting myself in the foot.
     private inline function notifySystems(post: EntitySystem -> Entity -> Void, e:Entity):Void
@@ -293,7 +301,7 @@ class World
             entities.clear();
         }
     }
-    
+
     private static var fAdded = function (observer:EntityObserver, e:Entity) : Void {
         observer.onAdded(e);
     }
@@ -321,10 +329,9 @@ private class ComponentMapperInitHelper
     {
         try {
             var annotations = haxe.rtti.Meta.getFields(Type.getClass(target));
-            
+
             for (fieldName in Reflect.fields(annotations)) {
                 var componentClassName = Reflect.field(annotations, fieldName).Mapper[0];
-                
                 if (componentClassName != null) {
                     var componentType:Class<Dynamic> = Type.resolveClass(componentClassName);
                     Reflect.setField(target, fieldName, world.getMapper(componentType));
@@ -339,6 +346,6 @@ private class ComponentMapperInitHelper
 private class Performer {
     public function new() {}
     public function perform(observer:EntityObserver, e:Entity) {
-        
+
     }
 }

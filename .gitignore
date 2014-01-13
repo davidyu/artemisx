@@ -1,4 +1,8 @@
 bin
+
+# neko binaries
+test.n
+
 # vim swapfiles
 .swp
 .swo

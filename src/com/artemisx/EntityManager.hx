@@ -7,9 +7,9 @@ import haxe.Int64;
 
 /**
  *
- * The entityManager class.
+ * The EntityManager class.
  *  originally written by Arni Arent
- *  ported to HaXe by Lewen Yu and HARRY
+ *  ported to HaXe by Team Yu
  *
  */
 
@@ -26,12 +26,12 @@ class EntityManager extends Manager {
     private var identifierPool:IdentifierPool;
 
     public function new() 
-	{
+    {
         entities = new Bag<Entity>();
         disabled = new Bitset(1);
         identifierPool = new IdentifierPool();
-		
-		activeEntityCount = 0;
+        
+        activeEntityCount = 0;
         totalAdded = Int64.ofInt(0);
         totalCreated = Int64.ofInt(0);
         totalDeleted = Int64.ofInt(0);
@@ -40,7 +40,7 @@ class EntityManager extends Manager {
     override public function initialize() {}
 
     public inline function createEntityInstance():Entity 
-	{
+    {
         var e = new Entity(world, identifierPool.checkout());
         totalCreated = Int64.add(totalCreated, Int64.ofInt(1) );
         return e;
@@ -48,15 +48,15 @@ class EntityManager extends Manager {
 
     override public inline function onEnabled(e:Entity) { disabled.unset(e.id); }
     override public inline function onDisabled(e:Entity) { disabled.set(e.id); }
-	override public inline function onAdded(e:Entity) 
-	{
+    override public inline function onAdded(e:Entity) 
+    {
         activeEntityCount++;
         totalAdded = Int64.add(totalAdded, Int64.ofInt(1) );
         entities.set(e.id, e);
     }
-	
+
     override public inline function onDeleted(e:Entity) 
-	{
+    {
         entities.set(e.id, null);
 
         disabled.unset(e.id);
@@ -88,7 +88,7 @@ class EntityManager extends Manager {
     public function get_totalDeleted():Int64 { return totalDeleted; }
 
     private inline function getEntity(entityId:Int):Entity 
-	{
+    {
         var e = entities.get(entityId);
         #if debug
         if (e == null) {
@@ -97,33 +97,33 @@ class EntityManager extends Manager {
         #end
         return e;
     }
-}
+    }
 
-private class IdentifierPool
-{
+    private class IdentifierPool
+    {
     private var ids:Bag<Int>;
     private var nextAvailableId:Int;
 
     public function new() 
-	{
+    {
         ids = new Bag();
         nextAvailableId = 0;
     }
 
     public inline function checkout() : Int
-	{
-		var id : Int;
+    {
+        var id : Int;
         if (ids.size > 0) {
             id = ids.removeLast();
         } else {
-			id = nextAvailableId++;
-		}
+            id = nextAvailableId++;
+        }
         return id;
     }
 
     public inline function checkin( id : Int ) : Void { 
-		if ( !ids.contains( id ) ) {
-			ids.add( id ); 
-		}
-	}
+        if ( !ids.contains( id ) ) {
+            ids.add( id ); 
+        }
+    }
 }

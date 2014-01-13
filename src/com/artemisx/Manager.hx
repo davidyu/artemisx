@@ -4,7 +4,7 @@ package com.artemisx;
  *
  * The Manager class.
  *  originally written by Arni Arent
- *  ported to HaXe by Lewen Yu and Harry
+ *  ported to HaXe by Team Yu
  *
  */
 

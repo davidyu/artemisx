@@ -14,7 +14,7 @@ using Lambda;
  *    http://gamadu.com/artemisx/javadoc/com/artemis/Aspect.html
  *
  * originally written by Arni Arent
- * ported to HaXe by Lewen Yu and Harry
+ * ported to HaXe by Team Yu
  */
 
 @:allow(com.artemisx)
@@ -80,7 +80,7 @@ class Aspect
         aspect.one(types);
         return aspect;
     }
-    
+
     public static inline function getAspectFromBits(bits:Bitset):Aspect
     {
         var aspect = new Aspect();
@@ -91,7 +91,7 @@ class Aspect
     public static function matches( signature : Aspect, componentBits : Bitset ) : Bool {
         var interested = true;
         var i = signature.allSet.nextSetBit( 0 );
-        
+
         // If all of types in signature allset are in componentBits
         if ( !signature.allSet.isEmpty() ) {
             while ( i >= 0 ) {
@@ -102,12 +102,12 @@ class Aspect
                 i = signature.allSet.nextSetBit( i + 1 );
             }
         }
-        
+
         // AND If at least one of the types of signature oneset are in componentBits
         if ( interested && !signature.oneSet.isEmpty() ) {
             interested = false;
             i = signature.oneSet.nextSetBit( 0 );
-            
+
             while ( i >= 0 ) {
                 if ( componentBits.get( i ) ) {
                     interested = true;
@@ -116,11 +116,11 @@ class Aspect
                 i = signature.oneSet.nextSetBit( i + 1 );
             }
         }
-        
+
         // AND If none of the types of signature exclusionset are in componentBits
         if ( interested && !signature.exclusionSet.isEmpty() ) {
             i = signature.exclusionSet.nextSetBit( 0 );
-            
+
             while ( i >= 0 ) {
                 if ( componentBits.get( i ) ) {
                     interested = false;
@@ -129,10 +129,10 @@ class Aspect
                 i = signature.exclusionSet.nextSetBit( i + 1 );
             }
         }
-        
+
         return interested;
     }
-    
+
     // Need to verify correctness...
     public static function fufills( aspect : Aspect, fufiller : Aspect ) : Bool {  
         var isSubset = true;
@@ -172,10 +172,10 @@ class Aspect
                 i = aspect.exclusionSet.nextSetBit( i + 1 );
             }
         }
-        
+
         return isSubset;
     }
-    
+
     public function equals( v : Aspect ) : Bool {
         return allSet.equals( v.allSet ) && oneSet.equals( v.oneSet ) && exclusionSet.equals( v.exclusionSet );
     }

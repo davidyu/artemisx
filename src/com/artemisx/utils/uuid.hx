@@ -2,7 +2,7 @@
  * UUID.hx, an implementation of a UUID v4 generator
  * Pretty much a verbatim copy of Richard Janicek's uuidFast generator, comments mine
  * -----------------
- * By Lewen Yu
+ * By Team Yu
  * Original function copyright (c) 2012 Richard Janicek, http://www.janicek.co
  *
  * The MIT License (MIT) http://www.opensource.org/licenses/mit-license.php

@@ -73,8 +73,6 @@ class Entity
         return this;
     }
 
-#if ( debug || fdb )
-    // For debugging only
     public function listComponents() : String {
         var i = componentBits.nextSetBit( 0 );
         var str = "[ id:" + id + ">" ;
@@ -87,6 +85,7 @@ class Entity
         return str;
     }
 
+#if ( debug || fdb )
     // Examine components in more detail
     public function dumpComponents() : Array<Component> {
         var i = componentBits.nextSetBit( 0 );

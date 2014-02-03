@@ -1,3 +1,5 @@
+package com.artemisx.test;
+
 import com.artemisx.Component;
 
 class ComponentA implements Component { }

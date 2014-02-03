@@ -1,4 +1,6 @@
-import com.utils.UUID;
+package com.artemisx.test;
+
+import com.artemisx.utils.UUID;
 
 class TestUUID extends haxe.unit.TestCase {
     var format : EReg;

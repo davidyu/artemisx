@@ -1,3 +1,5 @@
+package com.artemisx.test;
+
 import com.artemisx.Aspect;
 import com.artemisx.World;
 import com.artemisx.EntitySystem;

@@ -1,3 +1,5 @@
+package com.artemisx.test;
+
 //just demonstrates to me how dynamical casting works
 
 import com.utils.Bag;

@@ -176,7 +176,7 @@ class Bitset
 		var n = 31;
 		var y, x;
 		
-		y = i <<16;	if (y != 0) { n -=16; x = y; } else { x = i >>> 16; }
+		y = i <<16; if (y != 0) { n -=16; x = y; } else { x = i; }
 		y = x << 8; if (y != 0) { n -= 8; x = y; }
 		y = x << 4; if (y != 0) { n -= 4; x = y; }
 		y = x << 2; if (y != 0) { n -= 2; x = y; }

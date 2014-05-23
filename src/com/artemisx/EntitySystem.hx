@@ -132,11 +132,11 @@ private class SystemIndexManager
 
     public static function getIndexFor<T:EntitySystem>(es:Class<T>):Int
     {
-        var index:Null<Int> = indicies.get(untyped es);
+        var index:Null<Int> = indicies.get(cast(es));
 
         if (index == null) {
             index = INDEX++;
-            indicies.set(untyped es, index);
+            indicies.set(cast(es), index);
         }
         return index;
     }

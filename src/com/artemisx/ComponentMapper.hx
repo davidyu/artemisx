@@ -24,13 +24,12 @@ class ComponentMapper<A:Component>
 
     private function new(type:Class<A>, world:World)
     {
-        // Use untyped to work around the loss of parameter constraint
-        this.type = ComponentType.getTypeFor(untyped type); 
+        this.type = ComponentType.getTypeFor(cast(type)); 
         components = world.componentManager.getComponentsByType(this.type);
         this.classType = type;
     }
 
-    public inline function get(e:Entity):A { return untyped components.get(e.id); }
+    public inline function get(e:Entity):A { return cast(components.get(e.id)); }
 
     public inline function getSafe(e:Entity):A
     {

@@ -109,7 +109,7 @@ class Entity
     public inline function getComponentOfType(type:ComponentType):Component { return componentManager.getComponent(this, type); }
     // TODO: Ugly gets... probably not right.
     public inline function getComponent<T:Component>(clazz:Class<T>):T { return cast(componentManager.getComponent(this, ComponentType.getTypeFor(cast(clazz)))); }
-    public inline function getComponents(fillBag:Bag<Component>):Bag<Component> { return componentManager.getComponentsFor(this, fillBag); }
+    public inline function getComponents():Bag<Component> { return componentManager.getComponentsFor(this); }
 
     public inline function isActive():Bool { return entityManager.isActive(id); }
     public inline function isEnabled():Bool { return entityManager.isEnabled(id); }

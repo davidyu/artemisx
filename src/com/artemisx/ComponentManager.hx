@@ -33,7 +33,6 @@ class ComponentManager extends Manager
             i = componentBits.nextSetBit(i + 1);
         }
         componentBits.clear();
-
     }
 
     private inline function addComponent(e:Entity, type:ComponentType, component:Component) : Void
@@ -78,16 +77,17 @@ class ComponentManager extends Manager
         return cmp;
     }
 
-    public inline function getComponentsFor(e:Entity, fillBag:Bag<Component>):Bag<Component>
+    public inline function getComponentsFor(e:Entity):Bag<Component>
     {
+        var entityCmps: Bag<Component> = new Bag<Component>();
         var componentBits:Bitset = e.componentBits;
         var i = componentBits.nextSetBit(0);
 
         while (i >= 0) {
-            fillBag.add(componentsByType.get(i).get(e.id));
+            entityCmps.add(componentsByType.get(i).get(e.id));
             i = componentBits.nextSetBit(i + 1);
         }
-        return fillBag;
+        return entityCmps;
     }
 
     private function clean():Void

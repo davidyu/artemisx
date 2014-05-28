@@ -13,12 +13,12 @@ import com.artemisx.utils.Bitset;
 class ComponentManager extends Manager
 {
     private var componentsByType:Bag<Bag<Component>>;   // Try Bag<IntHash<Component> later
-    private var deleted:Bag<Entity>;
+    private var deletedEntities:Bag<Entity>;
 
     public function new() 
     {
         componentsByType = new Bag();
-        deleted = new Bag();
+        deletedEntities = new Bag();
     }
 
     override private function initialize() {}
@@ -90,15 +90,16 @@ class ComponentManager extends Manager
         return entityCmps;
     }
 
+    // batch remove all components attached to entities deleted on this update
     private function clean():Void
     {
-        if (deleted.size > 0) {
-            for (i in 0...deleted.size) {
-                removeComponentsOfEntity(deleted.get(i));
+        if (deletedEntities.size > 0) {
+            for (i in 0...deletedEntities.size) {
+                removeComponentsOfEntity(deletedEntities.get(i));
             }
-            deleted.clear();
+            deletedEntities.clear();
         }
     }
 
-    override public function onDeleted(e:Entity):Void { deleted.add(e); }
+    override public function onDeleted(e:Entity):Void { deletedEntities.add(e); }
 }

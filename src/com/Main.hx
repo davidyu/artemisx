@@ -44,13 +44,6 @@ class Main
 		var t = new DelayedEntityProcessingSystem(new Aspect());
 	}
 	
-	static function testSystem()
-	{
-		var w = new World();
-		var s = new EntitySystem(new Aspect());
-		//s.onAdded(m.	}
-	}
-	
 	static function testComponentMapper()
 	{
 	}
@@ -75,47 +68,6 @@ class Main
 		
 		b.toString();
 	}
-	
-	static function testArray()
-	{
-		var t:TArray<Int> = new TArray();
-		t.insertAt(10, 5);
-		trace(t);
-	}
-	
-	static function testClassHash()
-	{
-		var t:ClassHash<Entity,Int> = new ClassHash();
-		//t.set(TestComp, 5);
-		//t.set(TestComp2, 3);
-		trace(t.get(Entity));
-		//trace(t.get(TestComp2));
-		for (i in t.keys()) {
-			trace("hello" + i);
-		}
-	}
-	
-	static function testBitset()
-	{
-		// entry point
-		var bit = new Bitset(1);
-		var bit2 = new Bitset();
-		bit.set(33);
-		bit2.set(33);
-		bit2.set(1);
-
-		trace(bit.intersects(bit2));
-		trace(bit2.intersects(bit));
-		bit.toString();
-	}
-	
-	static function testClass(type:Class<Component>)
-	{
-		var t:Class<Component> = type;
-		trace(t);
-		trace(type);
-	}
-	
 }
 
 class TestComp implements Component

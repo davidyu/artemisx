@@ -102,4 +102,16 @@ class TestBitset extends haxe.unit.TestCase {
             assertEquals( Bitset.numberOfTrailingZeros( x ), i );
         }
     }
+
+    public function testIntersection() {
+        // entry point
+        var bit = new Bitset(1);
+        var bit2 = new Bitset();
+        bit.set(33);
+        bit2.set(33);
+        bit2.set(1);
+
+        assertEquals( bit.intersects( bit2 ), false );
+        assertEquals( bit2.intersects( bit ), false );
+    }
 }

@@ -183,4 +183,23 @@ class Bitset
 		
 		return n - ((x << 1) >>> 31);
 	}
+
+    public function iter(): Iterator<Int>
+    {
+        var i = this.nextSetBit(0);
+
+        function next(): Int {
+            i = nextSetBit( i + 1 );
+            return i;
+        }
+
+        function hasNext(): Bool {
+            return ( nextSetBit( i + 1 ) != -1 );
+        }
+
+        return {
+            next : next,
+            hasNext : hasNext
+        }
+    }
 }

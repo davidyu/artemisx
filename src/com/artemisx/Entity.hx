@@ -74,13 +74,13 @@ class Entity
     }
 
     public function listComponents() : String {
-        var i = componentBits.nextSetBit( 0 );
         var str = "[ id:" + id + ">" ;
 
-        while ( i != -1 ) {
+        var iter = componentBits.iter();
+        for ( i in iter ) {
             str += " " + ComponentType.className( ComponentType.getTypeFromIndex( i ) );
-            i = componentBits.nextSetBit( i+1 );
         }
+
         str += " ]";
         return str;
     }
@@ -88,12 +88,11 @@ class Entity
 #if ( debug || fdb )
     // Examine components in more detail
     public function dumpComponents() : Array<Component> {
-        var i = componentBits.nextSetBit( 0 );
         var list = new Array<Component>();
 
-        while ( i != -1 ) {
+        var iter = componentBits.iter();
+        for ( i in iter ) {
             list.push( getComponentOfType( ComponentType.getTypeFor( ComponentType.getTypeFromIndex( i ) ) ) );
-            i = componentBits.nextSetBit( i+1 );
         }
 
         return list;

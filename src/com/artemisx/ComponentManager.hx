@@ -26,12 +26,12 @@ class ComponentManager extends Manager
     private inline function removeComponentsOfEntity(e:Entity):Void
     {
         var componentBits:Bitset = e.componentBits;
-        var i = componentBits.nextSetBit(0);
 
-        while (i >= 0) {
+        var iter = componentBits.iter();
+        for ( i in iter ) {
             componentsByType.get(i).set(e.id, null);
-            i = componentBits.nextSetBit(i + 1);
         }
+
         componentBits.clear();
     }
 
@@ -81,12 +81,12 @@ class ComponentManager extends Manager
     {
         var entityCmps: Bag<Component> = new Bag<Component>();
         var componentBits:Bitset = e.componentBits;
-        var i = componentBits.nextSetBit(0);
 
-        while (i >= 0) {
+        var iter = componentBits.iter();
+        for ( i in iter ) {
             entityCmps.add(componentsByType.get(i).get(e.id));
-            i = componentBits.nextSetBit(i + 1);
         }
+
         return entityCmps;
     }
 

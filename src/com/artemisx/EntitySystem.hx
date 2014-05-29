@@ -68,15 +68,14 @@ class EntitySystem implements EntityObserver
         var contains = e.systemBits.get(systemIndex);
         var interested = true;
         var componentBits = e.componentBits;
-        var i = allSet.nextSetBit(0);
 
         if (!allSet.isEmpty()) {
-            while (i >= 0) {
+            var iter = allSet.iter();
+            for (i in iter) {
                 if (!componentBits.get(i)) {
                     interested = false;
                     break;
                 }
-                i = allSet.nextSetBit(++i);
             }
         }
         if (!exclusionSet.isEmpty() && interested) {

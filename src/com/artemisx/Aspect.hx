@@ -35,8 +35,6 @@ class Aspect
     private inline function get_exclusionSet():Bitset { return exclusionSet; }
     private inline function get_oneSet():Bitset { return oneSet; }
 
-    //Small gotcha: in contrast with Ari's cannonical implementation, the types
-    //parameter is an iterable rather than zero-or-more actual parameters
     public function all(types:Iterable<Class<Component>>):Aspect
     {
         if (types != null) {
@@ -90,43 +88,40 @@ class Aspect
 
     public static function matches( signature : Aspect, componentBits : Bitset ) : Bool {
         var interested = true;
-        var i = signature.allSet.nextSetBit( 0 );
 
         // If all of types in signature allset are in componentBits
         if ( !signature.allSet.isEmpty() ) {
-            while ( i >= 0 ) {
+            var iter = signature.allSet.iter();
+            for ( i in iter ) {
                 if ( !componentBits.get( i ) ) {
                     interested = false;
                     break;
                 }
-                i = signature.allSet.nextSetBit( i + 1 );
             }
         }
 
         // AND If at least one of the types of signature oneset are in componentBits
         if ( interested && !signature.oneSet.isEmpty() ) {
             interested = false;
-            i = signature.oneSet.nextSetBit( 0 );
 
-            while ( i >= 0 ) {
+            var iter = signature.oneSet.iter();
+            for ( i in iter ) {
                 if ( componentBits.get( i ) ) {
                     interested = true;
                     break;
                 }
-                i = signature.oneSet.nextSetBit( i + 1 );
             }
         }
 
         // AND If none of the types of signature exclusionset are in componentBits
         if ( interested && !signature.exclusionSet.isEmpty() ) {
-            i = signature.exclusionSet.nextSetBit( 0 );
 
-            while ( i >= 0 ) {
+            var iter = signature.exclusionSet.iter();
+            for ( i in iter ) {
                 if ( componentBits.get( i ) ) {
                     interested = false;
                     break;
                 }
-                i = signature.exclusionSet.nextSetBit( i + 1 );
             }
         }
 
@@ -140,36 +135,33 @@ class Aspect
         // Since allset means "must contain all in", fufiller allset that does not
         // contain an element in aspect allset does not contain "all in"
         if ( !aspect.allSet.isEmpty() ) { 
-            i = aspect.allSet.nextSetBit( 0 );
-            while ( i >= 0 ) {
+            var iter = aspect.allSet.iter();
+            for ( i in iter ) {
                 if ( aspect.allSet.get( i ) && ( i > fufiller.allSet.length || !fufiller.allSet.get( i ) ) ) {
                     isSubset = false;
                     break;
                 }
-                i = aspect.allSet.nextSetBit( i + 1 );
             }
         }
         // Opposite relationship for oneSet. If fufiller has something aspect doesn't
         // then fufiller might not contain "one of" the items in aspect
         if ( isSubset && !fufiller.oneSet.isEmpty() ) {
-            i = fufiller.oneSet.nextSetBit( 0 );
-            while ( i >= 0 ) {
+            var iter = fufiller.oneSet.iter();
+            for ( i in iter ) {
                 if ( fufiller.oneSet.get( i ) && ( i > aspect.oneSet.length || !aspect.oneSet.get( i ) ) ) {
                     isSubset = false;
                     break;
                 }
-                i = fufiller.oneSet.nextSetBit( i + 1 );
             }
         }
         // If aspect has a banned cmp that fufiller doesn't, then fufiller could violate aspect
         if ( isSubset && !aspect.exclusionSet.isEmpty() ) {
-            i = aspect.exclusionSet.nextSetBit( 0 );
-            while ( i >= 0 ) {
+            var iter = aspect.exclusionSet.iter();
+            for ( i in iter ) {
                 if ( aspect.exclusionSet.get( i ) && ( i > fufiller.exclusionSet.length || !fufiller.exclusionSet.get( i ) ) ) {
                     isSubset = false;
                     break;
                 }
-                i = aspect.exclusionSet.nextSetBit( i + 1 );
             }
         }
 

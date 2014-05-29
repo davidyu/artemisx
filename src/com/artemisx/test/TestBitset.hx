@@ -104,7 +104,6 @@ class TestBitset extends haxe.unit.TestCase {
     }
 
     public function testIntersection() {
-        // entry point
         var bit = new Bitset(1);
         var bit2 = new Bitset();
         bit.set(33);
@@ -113,5 +112,51 @@ class TestBitset extends haxe.unit.TestCase {
 
         assertEquals( bit.intersects( bit2 ), false );
         assertEquals( bit2.intersects( bit ), false );
+    }
+
+    public function testIteratorSanity() {
+        var bit = new Bitset();
+        bit.set(0);
+        bit.set(1);
+
+        var iter = bit.iter();
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 0 );
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 1 );
+        assertFalse( iter.hasNext() );
+
+        bit.set(2);
+        bit.set(4);
+
+        var iter = bit.iter();
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 0 );
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 1 );
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 2 );
+        assertTrue( iter.hasNext() );
+        assertEquals( iter.next(), 4 );
+        assertFalse( iter.hasNext() );
+    }
+
+    public function testIterator() {
+
+        var bs = new Bitset( 70 );
+        for ( i in 0...70 ) {
+            bs.set( i );
+        }
+
+        var numSetBits = 0;
+        var iter = bs.iter();
+
+        /*
+        for ( i in iter ) {
+            numSetBits++;
+        }
+
+        assertEquals( numSetBits, 500 );
+        */
     }
 }

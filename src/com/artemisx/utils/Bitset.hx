@@ -186,15 +186,16 @@ class Bitset
 
     public function iter(): Iterator<Int>
     {
-        var i = this.nextSetBit(0);
+        var nsb = nextSetBit( 0 );
 
         function next(): Int {
-            i = nextSetBit( i + 1 );
+            var i = nsb;
+            nsb = nextSetBit( nsb + 1 ); // advance to the next set bit
             return i;
         }
 
         function hasNext(): Bool {
-            return ( nextSetBit( i + 1 ) != -1 );
+            return ( nsb != -1 );
         }
 
         return {

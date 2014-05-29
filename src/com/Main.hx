@@ -50,10 +50,6 @@ class Main
 		var s = new EntitySystem(new Aspect());
 		//s.onAdded(m.	}
 	}
-	static function testWorld()
-	{
-		var w = new World();
-	}
 	
 	static function testComponentMapper()
 	{

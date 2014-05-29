@@ -25,19 +25,19 @@ class TestWorld extends haxe.unit.TestCase {
     public function testSystem() {
         var w : World = new World();
 
-        //var a : DummySystemA = new DummySystemA();
-        //var b : DummySystemB = new DummySystemB();
+        var a : DummySystemA = new DummySystemA(Aspect.getEmpty());
+        var b : DummySystemB = new DummySystemB(Aspect.getEmpty());
 
-        //w.setSystem( a );
-        //w.setSystem( b );
+        w.setSystem( a );
+        w.setSystem( b );
 
-        //var a2 : DummySystemA = w.getSystem( DummySystemA );
-        //var b2 : DummySystemB = w.getSystem( DummySystemB );
-//
+        var a2 : DummySystemA = w.getSystem( DummySystemA );
+        var b2 : DummySystemB = w.getSystem( DummySystemB );
+
         //if this worked a == a2 and b == b2
-//
-        //assertEquals( a, a2 );
-        //assertEquals( b, b2 );
+
+        assertEquals( a, a2 );
+        assertEquals( b, b2 );
 
         w.initialize();
 

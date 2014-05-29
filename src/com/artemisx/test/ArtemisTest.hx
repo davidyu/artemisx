@@ -6,6 +6,7 @@ class ArtemisTest {
         var r = new haxe.unit.TestRunner();
         r.add( new TestUUID() );
         r.add( new TestBitset() );
+        r.add( new TestBag() );
         r.add( new TestEntityManager() );
         r.add( new TestAspect() );
         r.add( new TestWorld() );

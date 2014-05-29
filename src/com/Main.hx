@@ -47,27 +47,6 @@ class Main
 	static function testComponentMapper()
 	{
 	}
-	
-	
-	static function testBag()
-	{
-		var b:Bag<Int> = new Bag();
-		b.add(5);
-		b.add(5);
-		b.add(5);
-		b.add(7);
-		b.set(10, 6);
-		b.remove(2);
-		b.toString();
-		
-		var b1:Bag<Int> = new Bag();
-		b1.add(7);
-		b1.add(6);
-		
-		b.removeAllIn(b1);
-		
-		b.toString();
-	}
 }
 
 class TestComp implements Component

@@ -5,8 +5,7 @@ import com.artemisx.utils.TArray;
 //only used once in ensureCapacity, consider changing type
 typedef INT_TYPE = #if flash9 UInt #else Int #end
 
-class Bitset
-{
+class Bitset {
     private static inline var ADDRESS_BITS_PER_WORD:Int = 5;
     private static inline var BITS_PER_WORD :Int = 1 << ADDRESS_BITS_PER_WORD;
     private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 4 bits used to shift
@@ -41,8 +40,7 @@ class Bitset
         }
     }
 
-    public inline function intersects(set:Bitset):Bool
-    {
+    public inline function intersects(set:Bitset):Bool {
         var res = false;
         for (i in 0...Std.int(Math.min(bits.length, set.wordsInUse))) {
             if ((bits[i] & set.bits[i]) != 0) {
@@ -52,8 +50,7 @@ class Bitset
         return res;
     }
 
-    public inline function nextClearBit(fromIndex:Int):Int
-    {
+    public inline function nextClearBit(fromIndex:Int):Int {
         var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
         var chunk = ~bits[wordIndex] & (WORD_MASK << fromIndex);
         var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
@@ -69,8 +66,7 @@ class Bitset
         }
     }
 
-    public function nextSetBit(fromIndex:Int)
-    {
+    public function nextSetBit(fromIndex:Int) {
         var wordIndex = fromIndex >> ADDRESS_BITS_PER_WORD;
         var chunk = bits[wordIndex] & (WORD_MASK << fromIndex);
         var bitsInUse = bits.length * ADDRESS_BITS_PER_WORD;
@@ -86,8 +82,7 @@ class Bitset
         }
     }
 
-    public inline function get(bitIndex:Int):Bool
-    {
+    public inline function get(bitIndex:Int):Bool {
         #if debug
         if (bitIndex >> ADDRESS_BITS_PER_WORD > Std.int(bits.length)) {
             throw "Attempt to get element out of bounds";
@@ -96,21 +91,18 @@ class Bitset
         return (bits[bitIndex >> ADDRESS_BITS_PER_WORD] & (1 << (bitIndex & BIT_INDEX_MASK))) != 0;
     }
 
-    public inline function set(bitIndex:Int):Void
-    {
+    public inline function set(bitIndex:Int):Void {
         ensureCapacity(bitIndex);
         bits[bitIndex >> ADDRESS_BITS_PER_WORD] |= 1 << (bitIndex & BIT_INDEX_MASK);
     }
 
-    public inline function unset(bitIndex:Int):Void
-    {
+    public inline function unset(bitIndex:Int):Void {
         ensureCapacity(bitIndex);
         bits[bitIndex >> ADDRESS_BITS_PER_WORD] &= ~(1 << (bitIndex & BIT_INDEX_MASK));
         recalulateWordsInUse();
     }
 
-    public function clear():Void
-    {
+    public function clear():Void {
         var length = bits.length;
         for (i in 0...length) {
             bits[i] = 0;
@@ -118,8 +110,7 @@ class Bitset
         wordsInUse = 0;
     }
 
-    public function isEmpty():Bool
-    {
+    public function isEmpty():Bool {
         for (i in bits) {
             if (i != 0) {
                 return false;
@@ -132,8 +123,7 @@ class Bitset
         return bits.length * BITS_PER_WORD;
     }
 
-    private function recalulateWordsInUse()
-    {
+    private function recalulateWordsInUse() {
         var i = 0;
 
         while (i < Std.int(bits.length)) {
@@ -164,9 +154,8 @@ class Bitset
     public function toString(): String { return bits.toString(); }
 
     // Find the number of zeroes after the lowest order one bit (rightmost)
-    // e.g. for 000100, returns 2... or should
-    public static inline function numberOfTrailingZeros(i:Int)
-    {
+    // e.g. for 000100, returns 2
+    public static inline function numberOfTrailingZeros(i:Int) {
         var n = 31;
         var y, x;
 
@@ -178,8 +167,7 @@ class Bitset
         return n - ((x << 1) >>> 31);
     }
 
-    public function iter(): Iterator<Int>
-    {
+    public function iter(): Iterator<Int> {
         var nsb = nextSetBit( 0 );
 
         function next(): Int {

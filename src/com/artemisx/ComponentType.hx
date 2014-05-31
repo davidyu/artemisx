@@ -31,21 +31,28 @@ class ComponentType
         return componentIndicies[index].type;
     }
 
-    public static function listAllComponentTypes() : Void {
-        var str : String = "";
-        var arr : Array<ComponentType> = [];
+#if debug
+    public static function traceAllComponentTypes() : Void {
+        trace( nameListOfAllComponentTypes() );
+    }
+
+    public static function nameListOfAllComponentTypes() : String {
+        var cmplist : Array<ComponentType> = [];
+        var namelist : Array<String>    = [];
 
         for ( i in componentTypes.iterator() ) {
-            arr.push( i );
-        }
-        arr.sort( typeIndexComparator );
-
-        for ( i in arr ) {
-            str += i.toString();
+            cmplist.push( i );
         }
 
-        trace( str );
+        cmplist.sort( typeIndexComparator );
+
+        for ( c in cmplist ) {
+            namelist.push( c.toString() );
+        }
+
+        return namelist;
     }
+#end
 
     private static var componentTypes:ClassHash<ComponentType> = new ClassHash<ComponentType>();
     private static var componentIndicies:Array<ComponentType> = new Array();

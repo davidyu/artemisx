@@ -97,7 +97,7 @@ class TestBitset extends haxe.unit.TestCase {
     }
 
     public function testNumberOfTrailingZeroes() {
-        for ( i in 0...31 ) {
+        for ( i in 0...32 ) {
             var x = 1 << i;
             assertEquals( Bitset.numberOfTrailingZeros( x ), i );
         }
@@ -110,8 +110,8 @@ class TestBitset extends haxe.unit.TestCase {
         bit2.set(33);
         bit2.set(1);
 
-        assertEquals( bit.intersects( bit2 ), false );
-        assertEquals( bit2.intersects( bit ), false );
+        assertEquals( bit.intersects( bit2 ), true );
+        assertEquals( bit2.intersects( bit ), true );
     }
 
     public function testIteratorSanity() {
@@ -141,22 +141,50 @@ class TestBitset extends haxe.unit.TestCase {
         assertFalse( iter.hasNext() );
     }
 
+    public function testNextSetBit() {
+        // sanity, one word
+        var bs = new Bitset( 32 );
+
+        for ( i in 0...32 ) {
+            bs.set( i );
+        }
+
+        //assertEquals( bs.wordsInUse, 1 );
+        //assertEquals( bs.bits.length, 1 );
+
+        for ( i in 0...31 ) {
+            assertEquals( bs.nextSetBit( i ), i );
+        }
+
+        // two words
+        var bs = new Bitset( 64 );
+
+        //assertEquals( bs.wordsInUse, 2 );
+        //assertEquals( bs.bits.length, 2 );
+
+        for ( i in 0...64 ) {
+            bs.set( i );
+        }
+
+        for ( i in 0...63 ) {
+            assertEquals( bs.nextSetBit( i ), i );
+        }
+    }
+
     public function testIterator() {
 
-        var bs = new Bitset( 70 );
-        for ( i in 0...70 ) {
+        var bs = new Bitset( 500 );
+        for ( i in 0...500 ) {
             bs.set( i );
         }
 
         var numSetBits = 0;
         var iter = bs.iter();
 
-        /*
         for ( i in iter ) {
             numSetBits++;
         }
 
         assertEquals( numSetBits, 500 );
-        */
     }
 }

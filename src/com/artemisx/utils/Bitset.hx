@@ -12,9 +12,9 @@ typedef INT_TYPE = #if flash9 UInt #else Int #end
 // jdk/openjdk/6-b14/java/util/BitSet.java#BitSet.nextSetBit%28int%29
 class Bitset
 {   
-    private static inline var ADDRESS_BITS_PER_WORD:Int = 6;
+    private static inline var ADDRESS_BITS_PER_WORD:Int = 5;
 	private static inline var BITS_PER_WORD :Int = 1 << ADDRESS_BITS_PER_WORD;
-	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 5 bits used to shift
+	private static inline var BIT_INDEX_MASK :Int = BITS_PER_WORD - 1; // Only last 4 bits used to shift
 	
 	private static inline var WORD_MASK : Int = 0xffffffff;
 

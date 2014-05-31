@@ -12,11 +12,6 @@ class TestBitset extends haxe.unit.TestCase {
         assertFalse( bs.get( 0 ) );
         bs.set( 0 );
         assertTrue( bs.get( 0 ) );
-
-        var bs = new Bitset( 0 );
-        assertFalse( bs.get( 0 ) );
-        assertEquals( bs.length, Bitset.BITS_PER_WORD );
-        // I feel that in a correct implementation, Bitsets of size 0 should have length 0. Oh well...
     }
 
     public function sub_testSetBit( n : Int ) {
@@ -150,7 +145,6 @@ class TestBitset extends haxe.unit.TestCase {
         }
 
         //assertEquals( bs.wordsInUse, 1 );
-        //assertEquals( bs.bits.length, 1 );
 
         for ( i in 0...31 ) {
             assertEquals( bs.nextSetBit( i ), i );
@@ -160,7 +154,6 @@ class TestBitset extends haxe.unit.TestCase {
         var bs = new Bitset( 64 );
 
         //assertEquals( bs.wordsInUse, 2 );
-        //assertEquals( bs.bits.length, 2 );
 
         for ( i in 0...64 ) {
             bs.set( i );
@@ -168,6 +161,18 @@ class TestBitset extends haxe.unit.TestCase {
 
         for ( i in 0...63 ) {
             assertEquals( bs.nextSetBit( i ), i );
+        }
+    }
+
+    public function testCompactness() {
+        var ws = Bitset.BITS_PER_WORD;
+
+        for ( i in 1...4) {
+            var bs = new Bitset( ws * i );
+            for ( j in 0...ws * i ) {
+                bs.set( j );
+            }
+            assertEquals( bs.wordsInUse, i );
         }
     }
 

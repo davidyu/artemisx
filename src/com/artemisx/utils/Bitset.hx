@@ -17,8 +17,9 @@ class Bitset {
     public var length( get_length, null):Int;
 
     public function new(?numBits:Int=1) {
+        if ( numBits == 0 ) throw "initializing a Bitset with capacity 0 is bad. Expect unexpected behavior";
         bits = new TArray();
-        ensureCapacity(numBits);
+        ensureCapacity(numBits - 1);
     }
 
     public function copy() {

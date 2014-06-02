@@ -62,11 +62,12 @@ class UUID {
                 uuid[i] = "4";
             } else {
                 if (rnd <= 0x02) {
-                    rnd = 0x2000000 + Std.int( ( ( seed = next( seed ) ) * 0x1000000 ) ) | 0;
+                    seed = next( seed );
+                    rnd = 0x2000000 + Std.int( ( seed / M31 ) * 0x1000000 ) | 0;
                 }
 
                 r = rnd & 0xf;
-                rnd = rnd >> 4;
+                rnd = rnd >> 4; // clear rnd
 
                 //bit magic to turn the 19th char into 8, 9, A or B
                 uuid[i] = chars[ (i == 19) ? ( ( r & 0x3 ) | 0x8 ) : r ];

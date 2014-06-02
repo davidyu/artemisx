@@ -9,7 +9,6 @@ private class ComponentA implements Component { }
 private class ComponentB implements Component { }
 
 @:access(com.artemisx.Aspect)
-//needs Haxe 2.11!!!
 class TestAspect extends haxe.unit.TestCase {
 
     public function testBasic() {

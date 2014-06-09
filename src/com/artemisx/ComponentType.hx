@@ -36,7 +36,7 @@ class ComponentType
         trace( nameListOfAllComponentTypes() );
     }
 
-    public static function nameListOfAllComponentTypes() : String {
+    public static function nameListOfAllComponentTypes() : Array<String> {
         var cmplist : Array<ComponentType> = [];
         var namelist : Array<String>    = [];
 

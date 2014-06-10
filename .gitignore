@@ -1,5 +1,9 @@
 bin
 
+# ignore doc content on master branch
+doc/content/
+doc/index.html
+
 # neko binaries
 test.n
 

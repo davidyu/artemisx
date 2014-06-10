@@ -1,4 +1,4 @@
 artemisx
 ===============
 
-HaXe port of Gamadu's Artemis Entity Systems. [http://desktop.github.com/artemisx/doc](API Documentation here).
+HaXe port of Gamadu's Artemis Entity Systems. [API Documentation here](http://desktop.github.com/artemisx/doc).

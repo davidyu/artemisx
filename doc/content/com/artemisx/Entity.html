@@ -1,0 +1,125 @@
+<html>
+
+<head>
+<title>artemisx API Documentation</title>
+
+<script type="text/javascript">
+<!--
+	function toggle(id) {
+		var e = document.getElementById(id);
+		e.isopen = !e.isopen;
+		e.style.display = e.isopen?"block":"none";
+		return false;
+	}
+-->
+</script>
+
+<style type="text/css">
+body {
+	text-align: center;
+	font-family: Trebuchet MS, sans-serif;
+	background-color : #7D7E86;
+}
+
+.document {
+	width : 800px;
+	position : relative;
+	margin : 10px auto 5px auto;
+	border : solid 2px #CFD0D4;
+	text-align : justify;
+	background-color: #F6FAFD;
+}
+
+.title {
+	font-size: 35;
+	font-weight: bold;
+	text-align: center;
+	background-color : #FFD473;
+	color : white;
+}
+
+ul.entry {
+	list-style-type: circle;
+	font-weight : bold;
+	margin-left : 30px;
+}
+
+.package_content {
+	display : none;
+}
+
+a {
+	color : #FFBB00;
+	font-weight : bold;
+	text-decoration : none;
+}
+
+a:hover {
+	color : #FFAE00;
+	text-decoration : underline;
+}
+
+a.package {
+	color : black;
+}
+
+.index {
+	margin-left : 10px;
+}
+
+.kwd {
+	color : #00A;
+}
+
+.classname {
+	font-size : 30;
+	font-weight : bold;
+	margin-left : 10px;
+	margin-bottom : 20px;
+}
+
+.classdoc {
+	border : 1px dashed #666;
+	margin-left : 20px;
+	margin-right : 20px;
+	padding : 5 5 5 5;
+}
+
+.importmod, .extends, .implements, .typedef, .platforms {
+	margin-left: 20px;
+	color : #777;
+}
+
+dd {
+	margin : 0 20 20 40;
+	font-size : 12pt;
+	color : #444;
+}
+
+dt {
+	margin-left : 20px;
+	margin-bottom : 5px;
+	text-align : left;
+	font-size : 10pt;
+	font-family: Courier New, monospace;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="document">
+<div class="title">artemisx API Documentation</div>
+
+<a href="#" onclick="javascript:history.back(-1); return false" class="index">Back</a> | <a href="../../../index.html" class="index">Index</a><div class="classname"><span class="kwd">class </span>com.artemisx.Entity</div><div class="classdoc">
+   The entity class.
+   originally written by Arni Arent
+   ported to HaXe by Team Yu
+</div><dl><dt><span class="kwd">var </span>componentBits(accessor,null) : <a href="../../com/artemisx/utils/Bitset.html" class="type">com.artemisx.utils.Bitset</a></dt><dd></dd><dt><span class="kwd">var </span>id(accessor,null) : <a href="../../Int.html" class="type">Int</a></dt><dd></dd><dt><span class="kwd">var </span>systemBits(accessor,null) : <a href="../../com/artemisx/utils/Bitset.html" class="type">com.artemisx.utils.Bitset</a></dt><dd></dd><dt><span class="kwd">var </span>uuid(accessor,null) : <a href="../../String.html" class="type">String</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>addComponent(component : <a href="../../com/artemisx/Component.html" class="type">Component</a>) : <a href="../../com/artemisx/Entity.html" class="type">Entity</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>addComponentOfType(component : <a href="../../com/artemisx/Component.html" class="type">Component</a>, type : <a href="../../com/artemisx/ComponentType.html" class="type">ComponentType</a>) : <a href="../../com/artemisx/Entity.html" class="type">Entity</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>addToWorld() : <a href="../../Void.html" class="type">Void</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>changedInWorld() : <a href="../../Void.html" class="type">Void</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>deleteFromWorld() : <a href="../../Void.html" class="type">Void</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>disable() : <a href="../../Void.html" class="type">Void</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>enable() : <a href="../../Void.html" class="type">Void</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>getComponent&lt;T&gt;(clazz : <a href="../../Class.html" class="type">Class</a>&lt;T&gt;) : T</dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>getComponentOfType(type : <a href="../../com/artemisx/ComponentType.html" class="type">ComponentType</a>) : <a href="../../com/artemisx/Component.html" class="type">Component</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>getComponents() : <a href="../../com/artemisx/utils/Bag.html" class="type">com.artemisx.utils.Bag</a>&lt;<a href="../../com/artemisx/Component.html" class="type">Component</a>&gt;</dt><dd></dd><dt><span class="kwd">function </span>getWorld() : <a href="../../com/artemisx/World.html" class="type">World</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>isActive() : <a href="../../Bool.html" class="type">Bool</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>isEnabled() : <a href="../../Bool.html" class="type">Bool</a></dt><dd></dd><dt><span class="kwd">function </span>listComponents() : <a href="../../String.html" class="type">String</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>removeComponent(c : <a href="../../Class.html" class="type">Class</a>&lt;<a href="../../com/artemisx/Component.html" class="type">Component</a>&gt;) : <a href="../../com/artemisx/Entity.html" class="type">Entity</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>removeComponentInstance(component : <a href="../../com/artemisx/Component.html" class="type">Component</a>) : <a href="../../com/artemisx/Entity.html" class="type">Entity</a></dt><dd></dd><dt><span class="kwd">inline </span><span class="kwd">function </span>removeComponentOfType(type : <a href="../../com/artemisx/ComponentType.html" class="type">ComponentType</a>) : <a href="../../com/artemisx/Entity.html" class="type">Entity</a></dt><dd></dd><dt><span class="kwd">function </span>toString() : <a href="../../String.html" class="type">String</a></dt><dd></dd></dl><a href="#" onclick="javascript:history.back(-1); return false" class="index">Back</a> | <a href="../../../index.html" class="index">Index</a>
+
+</div>
+
+</body>
+</html>

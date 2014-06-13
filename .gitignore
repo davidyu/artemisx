@@ -1,5 +1,13 @@
 bin
 
+# ignore doc content on master branch
+doc/content/
+doc/index.html
+
+# ignore chxdoc temp files
+__chxdoctmp
+
+>>>>>>> master
 # neko binaries
 test.n
 

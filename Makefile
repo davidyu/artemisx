@@ -2,8 +2,8 @@
 
 doc: doc/index.html
 
-%/index.html: %/haxedoc.xml %/template.xml
-	cd "$*" && haxedoc haxedoc.xml -f com
+%/index.html: %/haxedoc.xml
+	cd "$*" && chxdoc -o . -f haxedoc.xml --policy=deny --allow=com.artemisx.* --allow=haxe.unit.* --title=artemisx
 
 %/haxedoc.xml:
 	haxe -xml "$@" test.hxml

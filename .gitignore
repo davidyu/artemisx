@@ -4,6 +4,9 @@ bin
 doc/content/
 doc/index.html
 
+# ignore chxdoc temp files
+__chxdoctmp
+
 # neko binaries
 test.n
 

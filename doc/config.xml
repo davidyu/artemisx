@@ -1,4 +1,0 @@
-<filters policy="deny">
-  <filter policy="allow" path="com.artemisx.*" />
-  <filter policy="allow" path="/" />
-</filters>

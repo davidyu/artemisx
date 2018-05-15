@@ -32,12 +32,10 @@ Aspect.getAspectForOne( [ClientCmp, SyncCmp] );
 Aspect.getAspectForAll( [PosCmp] ).exclude( [CameraCmp, UICmp] );
 ```
 
-## Other implementation notes
+## Notes
 
 ### Passive systems
 
 A system can be made passive to turn off its processing. It can be made back active by setting `system.passive = false`.
-
-### UUIDs
 
 

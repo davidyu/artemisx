@@ -22,9 +22,12 @@ Each system only cares about a subset of entities, because it usually only cares
 Aspects can be thought of as a description of a components set. By providing standard set operations (`exclude, one, all`), Aspects allow you to define any set of components in the world:
 
 ```
-Aspect.getAspectForAll( [UICmp, PosCmp] ); // we are interested in entities with both UICmp and PosCmp
-Aspect.getAspectForOne( [ ClientCmp, SyncCmp ] ); // we are interested in entities with either a ClientCmp or a SyncCmp
-Aspect.getAspectForAll( [PosCmp] ).exclude( [CameraCmp, UICmp] ); // we are interested in entities with a PosCmp, but none of CameraCmp or a UICmp
+// we are interested in entities with both UICmp and PosCmpa
+Aspect.getAspectForAll( [UICmp, PosCmp] ); 
+// we are interested in entities with either a ClientCmp or a SyncCmp
+Aspect.getAspectForOne( [ClientCmp, SyncCmp] );
+// we are interested in entities with a PosCmp, but none of CameraCmp or a UICmp
+Aspect.getAspectForAll( [PosCmp] ).exclude( [CameraCmp, UICmp] );
 ```
 
 ## Other implementation notes

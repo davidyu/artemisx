@@ -32,6 +32,18 @@ Aspect.getAspectForOne( [ClientCmp, SyncCmp] );
 Aspect.getAspectForAll( [PosCmp] ).exclude( [CameraCmp, UICmp] );
 ```
 
+### Getting components
+
+Because components are not actually stored on the entities (but rather in their own arrays), you will need a `ComponentMapper` to get them:
+
+```
+// get PosCmp instance from an entity
+posMapper = world.getMapper( PosCmp );
+posCmp = posMapper.get( entity );
+```
+
+Storing the components in their own arrays allows you to exploit cache coherency for improved performance, especially if your systems operate on a single component. In reality, often you'll have systems that operate on multiple components.
+
 ## Notes
 
 ### Passive systems

@@ -19,11 +19,20 @@ Entities should not be explicitly new'd, they should be acquired through `world.
 
 Each system only cares about a subset of entities, because it usually only cares about a subset of components. In its `processEntities()` method, a `Bag<Entity>` is passed in as a parameter, which is the collection of entities that the system cares about. Systems tells the world which entities they cares about through Aspects.
 
-Aspects can be thought of as a description of a components set. By providing standard set operations (`exclude, one, all`), Aspects allow you to define any set of components in the world.
+Aspects can be thought of as a description of a components set. By providing standard set operations (`exclude, one, all`), Aspects allow you to define any set of components in the world:
+
+```
+Aspect.getAspectForAll( [UICmp, PosCmp] ); // we are interested in entities with both UICmp and PosCmp
+Aspect.getAspectForOne( [ ClientCmp, SyncCmp ] ); // we are interested in entities with either a ClientCmp or a SyncCmp
+Aspect.getAspectForAll( [PosCmp] ).exclude( [CameraCmp, UICmp] ); // we are interested in entities with a PosCmp, but none of CameraCmp or a UICmp
+```
 
 ## Other implementation notes
 
 ### Passive systems
 
 A system can be made passive to turn off its processing. It can be made back active by setting `system.passive = false`.
-Bitsets and UUIDs
+
+### UUIDs
+
+
